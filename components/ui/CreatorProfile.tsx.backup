@@ -1,0 +1,45 @@
+'use client';
+
+import { motion } from 'framer-motion';
+
+export function CreatorProfile() {
+    return (
+        <div className="border-t border-gray-700/50 pt-8 mt-12 mb-8">
+            <div className="flex flex-col items-center justify-center space-y-4">
+                <h3 className="text-sm font-roboto-mono text-gray-500 tracking-widest uppercase">
+                    DEVELOPED BY
+                </h3>
+
+                <a
+                    href="https://twitter.com/example"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center gap-3 px-6 py-3 bg-gray-900/50 border border-gray-700 rounded-full hover:border-gray-500 hover:bg-gray-800 transition-all duration-300"
+                >
+                    {/* 繧｢繧､繧ｳ繝ｳ繝励Ξ繝ｼ繧ｹ繝帙Ν繝繝ｼ・亥ｿ・ｦ√↓蠢懊§縺ｦ逕ｻ蜒上↓螟画峩・・*/}
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center text-xs font-bold text-white">
+                        Dev
+                    </div>
+
+                    <div className="flex flex-col items-start">
+                        <span className="text-sm font-bold text-gray-300 group-hover:text-white transition-colors">
+                            Levona / 繝ｬ繝懊・繝魁繝懊ち繝ｳ險ｭ鄂ｮ菫・
+                        </span>
+                        <span className="text-xs text-gray-500 group-hover:text-gray-400 transition-colors">
+                            莠ｺ逕溘・驥崎ｦ√↑繧ｹ繧､繝・メ繧呈款縺吩ｿゅ〒縺吶・
+                        </span>
+                    </div>
+
+                    <svg
+                        className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors ml-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    );
+}
