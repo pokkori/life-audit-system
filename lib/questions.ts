@@ -539,6 +539,7 @@ const CAREER_QUESTIONS: Question[] = [
     type: 'number',
     meta: {
       unit: '円/年',
+      suggestions: [10000, 30000, 50000, 100000, 300000],
       rationale: '自己投資が少ないことによるスキル陳腐化リスクです。',
       action: '年収の3-5%を自己投資に充てることを目標にしましょう。',
       reasoningTemplate: '適正投資額との差分 × {remainingYears}年 × スキル価値係数',
