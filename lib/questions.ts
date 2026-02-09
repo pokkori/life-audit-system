@@ -20,6 +20,7 @@ export interface Question {
   baseAmount?: number;
   meta?: {
     unit?: string;
+    suggestions?: number[];
     rationale: string;
     action: string;
     reasoningTemplate: string;
@@ -51,6 +52,7 @@ const ASSET_QUESTIONS: Question[] = [
       type: 'number',
       meta: {
         unit: '円/月',
+        suggestions: [5000, 10000, 30000, 50000, 100000],
         rationale: '月々の積立額を年利5%で複利運用した場合の機会損失です。新NISAなら運用益が非課税になります。',
         action: 'ネット証券で新NISA口座を開設し、月1,000円からでも積立投資を始めましょう。',
         reasoningTemplate: '月額{amount}円 × 12ヶ月 × {remainingYears}年 × 複利効果(年利5%) + 非課税メリット(20.315%)',
@@ -97,6 +99,7 @@ const ASSET_QUESTIONS: Question[] = [
       type: 'number',
       meta: {
         unit: '円/月',
+        suggestions: [500, 1000, 3000, 5000, 10000],
         rationale: '使っていないサービスへの支払いは純粋な損失です。',
         action: 'サブスクの棚卸しを行い、不要なものは即解約しましょう。',
         reasoningTemplate: '月額{amount}円 × 12ヶ月 × {remainingYears}年 × 精神的コスト係数1.25',
@@ -231,6 +234,7 @@ const HEALTH_QUESTIONS: Question[] = [
       type: 'number',
       meta: {
         unit: '日/週',
+        suggestions: [1, 2, 3, 4, 5, 6, 7],
         rationale: '睡眠不足による生産性低下を時給換算しています。',
         action: '就寝前のスマホ利用を控え、寝室環境を整えましょう。',
         reasoningTemplate: '週{amount}日 × 生産性低下25% × 時給{hourWage}円 × 52週 × {remainingYears}年',
@@ -392,6 +396,7 @@ const CAREER_QUESTIONS: Question[] = [
       type: 'number',
       meta: {
         unit: '万円/年',
+        suggestions: [30, 50, 100, 200, 300],
         rationale: '転職による年収アップの機会損失です。',
         action: '転職サイトに登録して、自分の市場価値を確認しましょう。',
         reasoningTemplate: '年収アップ{amount}万円 × {remainingYears}年（40歳以降は50%で計算）',

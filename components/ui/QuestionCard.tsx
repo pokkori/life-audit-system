@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Question, SelectOption } from '@/lib/questions';
 import { motion, AnimatePresence } from 'framer-motion';
+import { NumericInputWithSuggestions } from './NumericInputWithSuggestions';
 
 interface QuestionCardProps {
   question: Question;
@@ -104,21 +105,13 @@ export function QuestionCard({
 
             {question.type === 'number' && (
               <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={inputValue}
-                    onChange={e => setInputValue(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter' && isValid) {
-                        handleNumberSubmit();
-                      }
-                    }}
-                    placeholder="金額を入力"
-                    className="flex-1 px-6 py-4 bg-gray-800 text-white text-xl border-2 border-gray-600 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/50 transition-all font-roboto-mono"
-                  />
-                  <span className="text-gray-400 text-lg">{question.meta?.unit || '円'}</span>
-                </div>
+                <NumericInputWithSuggestions
+                  value={inputValue}
+                  onChange={setInputValue}
+                  onEnter={handleNumberSubmit}
+                  unit={question.meta?.unit || '円'}
+                  suggestions={question.meta?.suggestions}
+                />
                 <button
                   onClick={handleNumberSubmit}
                   disabled={!isValid}
