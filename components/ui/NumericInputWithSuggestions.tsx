@@ -31,8 +31,17 @@ export function NumericInputWithSuggestions({
                             <input
                                 type="number"
                                 value={value}
-                                onChange={(e) => onChange(e.target.value)}
-                                onKeyDown={(e) => e.key === 'Enter' && onEnter()}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    if (val === '' || parseFloat(val) >= 0) {
+                                        onChange(val);
+                                    }
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === '-' || e.key === 'e') e.preventDefault();
+                                    if (e.key === 'Enter') onEnter();
+                                }}
+                                min="0"
                                 placeholder={placeholder || '金額を入力'}
                                 className="w-full px-6 py-4 bg-gray-800 text-white text-xl border-2 border-cyan-500/50 rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/20 transition-all font-roboto-mono pr-16 appearance-none"
                                 autoFocus
