@@ -53,7 +53,7 @@ export function RecoverySimulator({ totalLoss, maxRecoverable, region = 'JP' }: 
                 {/* 数値表示 - Force Vertical Stack (Inline Styles & Version Marker) */}
                 <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: '1.5rem' }}>
                     <div className="bg-green-950/30 p-4 rounded-xl border border-green-500/30 text-center w-full">
-                        <p className="text-xs text-green-400 font-bold mb-1 uppercase tracking-tighter">Recovered Amount (v2)</p>
+                        <p className="text-xs text-green-400 font-bold mb-1 uppercase tracking-tighter">Recovered Amount</p>
                         <div className="flex justify-center items-baseline w-full px-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-green-500/20">
                             <p className="text-2xl sm:text-3xl font-black text-green-400 font-roboto-mono tracking-tighter whitespace-nowrap">
                                 {formatCurrency(recoveredAmount)}
@@ -62,7 +62,7 @@ export function RecoverySimulator({ totalLoss, maxRecoverable, region = 'JP' }: 
                         <p className="text-xs text-green-500/70 mt-1">{region === 'JP' ? '生涯で取り戻せる金額' : 'Potential Lifetime Recovery'}</p>
                     </div>
                     <div className="bg-red-950/30 p-4 rounded-xl border border-red-500/30 text-center w-full">
-                        <p className="text-xs text-red-400 font-bold mb-1 uppercase tracking-tighter">Residual Loss (v2)</p>
+                        <p className="text-xs text-red-400 font-bold mb-1 uppercase tracking-tighter">Residual Loss</p>
                         <div className="flex justify-center items-baseline w-full px-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-red-500/20">
                             <p className="text-xl sm:text-2xl font-black text-gray-400 font-roboto-mono tracking-tighter whitespace-nowrap">
                                 {formatCurrency(remainingLoss)}
