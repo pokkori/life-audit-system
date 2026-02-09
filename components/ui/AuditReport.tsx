@@ -103,11 +103,11 @@ export function AuditReport({
 
             {/* シミュレーター & ロードマップ (収益化の鍵) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <RecoverySimulator
+                {/* <RecoverySimulator
                     totalLoss={report.totalFinancialLoss}
                     maxRecoverable={report.maxRecoverableLoss}
                     region={region}
-                />
+                /> */}
                 <ImprovementRoadmap region={region} />
             </div>
 
