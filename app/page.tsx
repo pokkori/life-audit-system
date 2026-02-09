@@ -41,7 +41,7 @@ function AgeInputForm({ onSubmit }: { onSubmit: (age: number) => void }) {
           >
             {Array.from({ length: 85 }, (_, i) => i + 10).map(val => (
               <option key={val} value={val} className="bg-gray-800">
-                {val} 歳 {val === 48 ? ' (日本平均)' : ''}
+                {val} 歳
               </option>
             ))}
           </select>
