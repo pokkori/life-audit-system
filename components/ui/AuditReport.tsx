@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { AuditResultReport, DisplayCategory } from '@/types/audit';
+import { AuditResultReport, DisplayCategory, Locale, Region } from '@/types/audit';
 import { AccordionCard } from './AccordionCard';
 import { ShareButtons } from './ShareButtons';
 import { CreatorProfile } from './CreatorProfile';
@@ -9,7 +9,18 @@ import { RecoverySimulator } from './RecoverySimulator';
 import { ImprovementRoadmap } from './ImprovementRoadmap';
 import { LIFETIME_AGE } from '@/lib/AuditEngine';
 
-export function AuditReport({ report, age }: { report: AuditResultReport, age: number }) {
+export function AuditReport({
+    report,
+    age,
+    locale = 'ja-JP',
+    region = 'JP'
+}: {
+    report: AuditResultReport;
+    age: number;
+    locale?: Locale;
+    region?: Region;
+}) {
+
     // NaN防止: remainingYearsの安全な計算
     const remainingYears = useMemo(() => {
         const years = LIFETIME_AGE - age;
@@ -74,7 +85,9 @@ export function AuditReport({ report, age }: { report: AuditResultReport, age: n
 
                 <div className="text-center relative z-10">
                     <div className="my-8 flex justify-center items-center gap-1 w-full overflow-hidden px-2">
-                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-red-600 font-roboto-mono flex-shrink-0">¥</span>
+                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-red-600 font-roboto-mono flex-shrink-0">
+                            {region === 'JP' ? '¥' : '$'}
+                        </span>
                         <p className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-red-600 font-roboto-mono text-neon-blood animate-heartbeat-heavy tracking-tighter leading-none whitespace-nowrap">
                             {Math.round(report.totalFinancialLoss).toLocaleString()}
                         </p>
@@ -93,8 +106,9 @@ export function AuditReport({ report, age }: { report: AuditResultReport, age: n
                 <RecoverySimulator
                     totalLoss={report.totalFinancialLoss}
                     maxRecoverable={report.maxRecoverableLoss}
+                    region={region}
                 />
-                <ImprovementRoadmap />
+                <ImprovementRoadmap region={region} />
             </div>
 
             {/* 推奨対策 */}
@@ -197,6 +211,7 @@ export function AuditReport({ report, age }: { report: AuditResultReport, age: n
                 totalLoss={report.totalFinancialLoss}
                 lossAnalogy={report.lossAnalogy || ''}
                 topRiskCategory={topCategory}
+                locale={locale}
             />
 
             {/* クリエイタープロフィール */}

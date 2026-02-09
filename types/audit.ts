@@ -1,3 +1,7 @@
+// Locale & Region definitions
+export type Locale = 'ja-JP' | 'en-US';
+export type Region = 'JP' | 'US';
+
 // DisplayCategory - 4つの診断カテゴリ
 export type DisplayCategory = '資産診断' | '健康診断' | 'キャリア診断' | '時間・環境診断';
 
@@ -100,4 +104,6 @@ export interface UserProfile {
   hourWage?: number;
   age?: number;
   annualIncome?: number;
+  locale?: Locale;
+  region?: Region;
 }

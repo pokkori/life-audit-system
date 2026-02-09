@@ -1,4 +1,4 @@
-import { AuditCategory, DisplayCategory } from "@/types/audit";
+import { AuditCategory, DisplayCategory, Region } from "@/types/audit";
 
 export interface SelectOption {
   value: string | number;
@@ -10,7 +10,7 @@ export interface Question {
   id: string;
   text: string;
   category: AuditCategory;
-  displayCategory: DisplayCategory;
+  displayCategory: string; // ローカライズされたカテゴリ名が入る
   type: 'boolean' | 'number' | 'select';
   multiple?: boolean;
   options?: SelectOption[];
@@ -27,11 +27,11 @@ export interface Question {
   };
 }
 
-
 // ========================================
-// 資産診断（9問）
+// 日本向け質問セット (JP)
 // ========================================
-const ASSET_QUESTIONS: Question[] = [
+const JP_QUESTIONS: Question[] = [
+  // 資産診断
   {
     id: 'asset-1',
     text: '新NISA（つみたて投資枠）やiDeCoを活用していますか？',
@@ -189,12 +189,21 @@ const ASSET_QUESTIONS: Question[] = [
       reasoningTemplate: '年間{amount}円 × {remainingYears}年 × 精神的コスト係数1.25',
     },
   },
-];
+  {
+    id: 'asset-9',
+    text: '住宅ローンの借り換えを検討したことがありますか？（金利0.5%以上の持ち家の方）',
+    category: AuditCategory.SAVINGS,
+    displayCategory: '資産診断',
+    type: 'boolean',
+    baseAmount: 100000,
+    meta: {
+      rationale: '高金利ローンの継続による過剰な利息支払いです。',
+      action: '住宅ローン借り換えサービスで、どのくらい削減できるかシミュレーションしましょう。',
+      reasoningTemplate: '残債3000万円 × 金利差0.5% × {remainingYears}年想定の平均損失',
+    },
+  },
 
-// ========================================
-// 健康診断（8問）
-// ========================================
-const HEALTH_QUESTIONS: Question[] = [
+  // 健康診断
   {
     id: 'health-1',
     text: '歯科検診やクリーニングをどのくらい先延ばしにしていますか？',
@@ -236,7 +245,7 @@ const HEALTH_QUESTIONS: Question[] = [
         unit: '日/週',
         suggestions: [1, 2, 3, 4, 5, 6, 7],
         rationale: '睡眠不足による生産性低下を時給換算しています。',
-        action: '就寝前のスマホ利用を控え、寝室環境を整えましょう。',
+        action: '就寝前のスマホ利用を控え、寝室環境を整えましょう休。',
         reasoningTemplate: '週{amount}日 × 生産性低下25% × 時給{hourWage}円 × 52週 × {remainingYears}年',
       },
     },
@@ -248,134 +257,8 @@ const HEALTH_QUESTIONS: Question[] = [
       reasoningTemplate: '睡眠不足による生産性低下20-30% × 時給{hourWage}円 × {remainingYears}年',
     },
   },
-  {
-    id: 'health-3',
-    text: '運動習慣はありますか？',
-    category: AuditCategory.HEALTH,
-    displayCategory: '健康診断',
-    type: 'select',
-    options: [
-      { value: 'active', label: '週3回以上運動している', lossMultiplier: 0 },
-      { value: 'moderate', label: '週1-2回運動している', lossMultiplier: 0.3 },
-      { value: 'light', label: '月に数回程度', lossMultiplier: 0.7 },
-      { value: 'none', label: 'ほとんど運動していない', lossMultiplier: 1 },
-    ],
-    followUp: {
-      id: 'health-3a',
-      text: '運動しない主な理由は何ですか？',
-      category: AuditCategory.HEALTH,
-      displayCategory: '健康診断',
-      type: 'select',
-      options: [
-        { value: 'time', label: '時間がない', lossMultiplier: 1 },
-        { value: 'motivation', label: 'やる気が出ない', lossMultiplier: 1 },
-        { value: 'money', label: 'ジム代が高い', lossMultiplier: 1 },
-        { value: 'other', label: 'その他', lossMultiplier: 1 },
-      ],
-      meta: {
-        rationale: '運動不足は将来の医療費増加につながります。',
-        action: '理由に合わせた対策を取りましょう。時間がないなら10分の運動から、費用なら公園でのウォーキングから。',
-        reasoningTemplate: '運動不足による医療費増加リスク1.5倍 × 年間医療費30万円 × {remainingYears}年',
-      },
-    },
-    followUpCondition: 'specific',
-    followUpTriggerValues: ['light', 'none'],
-    baseAmount: 150000,
-    meta: {
-      rationale: '運動不足による将来の医療費増加・生産性低下です。',
-      action: '週に2回、30分程度のウォーキングから始めてみましょう。',
-      reasoningTemplate: '医療費リスク増加50% × 年間医療費30万円 × {remainingYears}年 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'health-4',
-    text: '健康診断で「要再検査」「要精密検査」が出た場合、すぐに受診していますか？',
-    category: AuditCategory.HEALTH,
-    displayCategory: '健康診断',
-    type: 'select',
-    options: [
-      { value: 'immediate', label: 'すぐに受診している', lossMultiplier: 0 },
-      { value: 'delayed', label: '少し遅れるが受診する', lossMultiplier: 0.3 },
-      { value: 'sometimes', label: '受診しないこともある', lossMultiplier: 0.7 },
-      { value: 'never', label: 'ほとんど受診しない', lossMultiplier: 1 },
-    ],
-    baseAmount: 200000,
-    meta: {
-      rationale: '早期発見・早期治療の機会損失による将来の高額治療費リスクです。',
-      action: '「要再検査」が出たら、2週間以内に専門医を受診しましょう。',
-      reasoningTemplate: '重症化リスク × 治療費期待値{amount}円 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'health-5',
-    text: '食事の栄養バランスについてどの程度意識していますか？',
-    category: AuditCategory.HEALTH,
-    displayCategory: '健康診断',
-    type: 'select',
-    options: [
-      { value: 'careful', label: 'バランスを考えて食事している', lossMultiplier: 0 },
-      { value: 'somewhat', label: 'ある程度は意識している', lossMultiplier: 0.3 },
-      { value: 'rarely', label: 'あまり意識していない', lossMultiplier: 0.7 },
-      { value: 'none', label: '全く意識していない', lossMultiplier: 1 },
-    ],
-    baseAmount: 30000,
-    meta: {
-      rationale: '栄養バランスの悪い食事による生産性低下・健康リスクです。',
-      action: '野菜・タンパク質を意識した食事を週に数回取り入れましょう。',
-      reasoningTemplate: '年間{amount}円 × {remainingYears}年 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'health-6',
-    text: '喫煙・過度な飲酒の習慣はありますか？',
-    category: AuditCategory.HEALTH,
-    displayCategory: '健康診断',
-    type: 'select',
-    options: [
-      { value: 'none', label: 'どちらもない', lossMultiplier: 0 },
-      { value: 'drink', label: '週3回以上飲酒', lossMultiplier: 0.5 },
-      { value: 'smoke', label: '喫煙している', lossMultiplier: 1 },
-      { value: 'both', label: '両方ある', lossMultiplier: 1.5 },
-    ],
-    baseAmount: 200000,
-    meta: {
-      rationale: '喫煙・過度な飲酒による健康リスク・支出増加です。',
-      action: '禁煙外来や節酒アプリの活用を検討しましょう。',
-      reasoningTemplate: '健康リスク増加 + 年間支出{amount}円 × {remainingYears}年 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'health-7',
-    text: 'ストレス解消やメンタルヘルスケアを意識的に行っていますか？',
-    category: AuditCategory.HEALTH,
-    displayCategory: '健康診断',
-    type: 'boolean',
-    baseAmount: 50000,
-    meta: {
-      rationale: 'メンタルヘルス問題による生産性低下・医療費リスクです。',
-      action: '週に1回は趣味や運動でリフレッシュする時間を確保しましょう。',
-      reasoningTemplate: '年間{amount}円 × {remainingYears}年 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'health-8',
-    text: '持病や慢性的な症状を放置していませんか？',
-    category: AuditCategory.HEALTH,
-    displayCategory: '健康診断',
-    type: 'boolean',
-    baseAmount: 150000,
-    meta: {
-      rationale: '持病の放置による重症化リスク・QOL低下です。',
-      action: '気になる症状があれば、早めにかかりつけ医に相談しましょう。',
-      reasoningTemplate: '重症化による治療費{amount}円 × 精神的コスト係数1.25',
-    },
-  },
-];
 
-// ========================================
-// キャリア診断（8問）
-// ========================================
-const CAREER_QUESTIONS: Question[] = [
+  // キャリア診断
   {
     id: 'career-1',
     text: '転職や年収アップについてどのように考えていますか？',
@@ -393,10 +276,15 @@ const CAREER_QUESTIONS: Question[] = [
       text: '転職した場合、年収がいくら上がると思いますか？',
       category: AuditCategory.CAREER,
       displayCategory: 'キャリア診断',
-      type: 'number',
+      type: 'select',
+      options: [
+        { value: 50, label: '50万円くらい', lossMultiplier: 0 },
+        { value: 100, label: '100万円くらい', lossMultiplier: 0 },
+        { value: 200, label: '200万円くらい', lossMultiplier: 0 },
+        { value: 300, label: '300万円以上', lossMultiplier: 0 },
+      ],
       meta: {
         unit: '万円/年',
-        suggestions: [30, 50, 100, 200, 300],
         rationale: '転職による年収アップの機会損失です。',
         action: '転職サイトに登録して、自分の市場価値を確認しましょう。',
         reasoningTemplate: '年収アップ{amount}万円 × {remainingYears}年（40歳以降は50%で計算）',
@@ -410,147 +298,8 @@ const CAREER_QUESTIONS: Question[] = [
       reasoningTemplate: '転職による年収アップ機会 × {remainingYears}年',
     },
   },
-  {
-    id: 'career-2',
-    text: '英語学習についてどのような状況ですか？',
-    category: AuditCategory.LEARNING,
-    displayCategory: 'キャリア診断',
-    type: 'select',
-    options: [
-      { value: 'fluent', label: 'ビジネスレベルで使える', lossMultiplier: 0 },
-      { value: 'learning', label: '学習中', lossMultiplier: 0.3 },
-      { value: 'stalled', label: '学習を始めたが止まっている', lossMultiplier: 0.7 },
-      { value: 'none', label: '学習していない/必要ない', lossMultiplier: 1 },
-    ],
-    baseAmount: 500000,
-    meta: {
-      rationale: '英語スキルの有無による年収差（平均10-20%）を算出しています。',
-      action: '毎日10分でも英語に触れる習慣をつけましょう。',
-      reasoningTemplate: '英語力による年収差{amount}円 × {remainingYears}年 × 確率係数',
-    },
-  },
-  {
-    id: 'career-3',
-    text: 'IT・デジタルスキル（Excel、プログラミング、データ分析など）の習得状況は？',
-    category: AuditCategory.LEARNING,
-    displayCategory: 'キャリア診断',
-    type: 'select',
-    options: [
-      { value: 'advanced', label: '業務で高度に活用している', lossMultiplier: 0 },
-      { value: 'intermediate', label: '基本的なスキルはある', lossMultiplier: 0.3 },
-      { value: 'learning', label: '学習中・これから学ぶ', lossMultiplier: 0.5 },
-      { value: 'none', label: 'ほとんど使えない', lossMultiplier: 1 },
-    ],
-    baseAmount: 300000,
-    meta: {
-      rationale: 'デジタルスキルの有無による市場価値の差です。',
-      action: 'オンライン学習サービスでExcelやプログラミングの基礎を学びましょう。',
-      reasoningTemplate: 'スキル格差による年収差{amount}円 × {remainingYears}年 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'career-4',
-    text: '「いつか取ろう」と思っている資格を半年以上先延ばしにしていますか？',
-    category: AuditCategory.CAREER,
-    displayCategory: 'キャリア診断',
-    type: 'boolean',
-    followUp: {
-      id: 'career-4a',
-      text: '目指している資格のジャンルは？',
-      category: AuditCategory.CAREER,
-      displayCategory: 'キャリア診断',
-      type: 'select',
-      options: [
-        { value: 'national', label: '国家資格（士業など）', lossMultiplier: 2 },
-        { value: 'it', label: 'IT関連資格', lossMultiplier: 1 },
-        { value: 'language', label: '語学資格（TOEIC等）', lossMultiplier: 0.8 },
-        { value: 'other', label: 'その他', lossMultiplier: 0.5 },
-      ],
-      meta: {
-        rationale: '資格取得による昇進・昇給機会の損失です。',
-        action: '試験日を決めて、学習計画を立てましょう。',
-        reasoningTemplate: '資格による年収アップ × {remainingYears}年',
-      },
-    },
-    followUpCondition: 'yes',
-    baseAmount: 500000,
-    meta: {
-      rationale: '資格保有者は平均10-20%年収が高いという統計に基づいています。',
-      action: 'まずは試験日を決めて、逆算で学習計画を立てましょう。',
-      reasoningTemplate: '{remainingYears}年 × リスク係数0.2 × 基準年収{amount}円 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'career-5',
-    text: '自分の履歴書・職務経歴書を1年以上更新していませんか？',
-    category: AuditCategory.CAREER,
-    displayCategory: 'キャリア診断',
-    type: 'boolean',
-    baseAmount: 200000,
-    meta: {
-      rationale: '突然のキャリアチャンスを逃すリスクです。',
-      action: '半年に一度は自分の経歴やスキルを棚卸しする時間を設けましょう。',
-      reasoningTemplate: '{remainingYears}年 × リスク係数0.1 × 機会損失{amount}円 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'career-6',
-    text: '気乗りしない飲み会や付き合いにどのくらい参加していますか？',
-    category: AuditCategory.RELATIONSHIP,
-    displayCategory: 'キャリア診断',
-    type: 'select',
-    options: [
-      { value: 'never', label: '断れている/そもそもない', lossMultiplier: 0 },
-      { value: 'rarely', label: '年に数回程度', lossMultiplier: 0.3 },
-      { value: 'monthly', label: '月1-2回', lossMultiplier: 0.7 },
-      { value: 'weekly', label: '週1回以上', lossMultiplier: 1 },
-    ],
-    baseAmount: 100000,
-    meta: {
-      rationale: '不本意な飲み会への参加費用 + 時間の機会損失です。',
-      action: '勇気を持って断ることも大切。自分の時間を優先しましょう。',
-      reasoningTemplate: '(参加費5,000円 + 時間3時間 × 時給{hourWage}円) × 年間回数 × {remainingYears}年',
-    },
-  },
-  {
-    id: 'career-7',
-    text: '副業・複業への取り組み状況は？',
-    category: AuditCategory.CAREER,
-    displayCategory: 'キャリア診断',
-    type: 'select',
-    options: [
-      { value: 'active', label: '副業で収入を得ている', lossMultiplier: 0 },
-      { value: 'preparing', label: '準備中・検討中', lossMultiplier: 0.3 },
-      { value: 'interested', label: '興味はあるが動いていない', lossMultiplier: 0.7 },
-      { value: 'none', label: '興味がない/禁止されている', lossMultiplier: 0 },
-    ],
-    baseAmount: 600000,
-    meta: {
-      rationale: '副業による追加収入の機会損失です（月5万円想定）。',
-      action: 'スキルを活かせる副業プラットフォームに登録してみましょう。',
-      reasoningTemplate: '月5万円 × 12ヶ月 × {remainingYears}年 × 実現可能性係数',
-    },
-  },
-  {
-    id: 'career-8',
-    text: '年間の自己投資額（書籍、セミナー、オンライン講座など）はいくらですか？',
-    category: AuditCategory.LEARNING,
-    displayCategory: 'キャリア診断',
-    type: 'number',
-    meta: {
-      unit: '円/年',
-      suggestions: [10000, 30000, 50000, 100000, 300000],
-      rationale: '自己投資が少ないことによるスキル陳腐化リスクです。',
-      action: '年収の3-5%を自己投資に充てることを目標にしましょう。',
-      reasoningTemplate: '適正投資額との差分 × {remainingYears}年 × スキル価値係数',
-    },
-  },
-];
 
-// ========================================
-// 時間・環境診断（8問）
-// ========================================
-const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
+  // 時間・環境診断
   {
     id: 'time-1',
     text: '探し物に費やす時間はどのくらいですか？',
@@ -570,166 +319,218 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
       reasoningTemplate: '1日10分 × 365日 × 時給{hourWage}円 × {remainingYears}年',
     },
   },
+];
+
+// ========================================
+// 米国向け質問セット (US) - 仮
+// ========================================
+const US_QUESTIONS: Question[] = [
   {
-    id: 'time-2',
-    text: '10年以上前の古い家電を使い続けていますか？',
-    category: AuditCategory.ENVIRONMENT,
-    displayCategory: '時間・環境診断',
+    id: 'asset-us-1',
+    text: 'Are you maximizing your 401(k) employer match or contributing to a Roth IRA?',
+    category: AuditCategory.INVESTMENT,
+    displayCategory: 'Financial Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'max', label: 'Maximizing both', lossMultiplier: 0 },
+      { value: 'match_only', label: 'Employer match only', lossMultiplier: 0.3 },
+      { value: 'partially', label: 'Contributing partially', lossMultiplier: 0.6 },
+      { value: 'none', label: 'Not contributing', lossMultiplier: 1 },
+    ],
+    followUp: {
+      id: 'asset-us-1a',
+      text: 'How much more could you realistically invest per month?',
+      category: AuditCategory.INVESTMENT,
+      displayCategory: 'Financial Diagnosis',
+      type: 'number',
+      meta: {
+        unit: 'USD/Month',
+        suggestions: [100, 500, 1000, 2000],
+        rationale: 'Opportunity cost of not using tax-advantaged accounts compounded at 7% annually.',
+        action: 'Talk to your HR or open a brokerage account to start contributing to a Roth IRA.',
+        reasoningTemplate: '${amount} × 12 months × {remainingYears} years × 7% compounding + Tax benefits',
+      },
+    },
+    followUpCondition: 'specific',
+    followUpTriggerValues: ['none', 'partially', 'match_only'],
+    meta: {
+      rationale: 'Missing out on tax-free growth and employer free money.',
+      action: 'Set up automatic contributions to your retirement accounts today.',
+      reasoningTemplate: 'Calculated based on average market returns and tax savings.',
+    },
+  },
+  {
+    id: 'health-us-1',
+    text: 'Do you have a Health Savings Account (HSA) and are you contributing to it?',
+    category: AuditCategory.HEALTH,
+    displayCategory: 'Health Diagnosis',
+    type: 'boolean',
+    baseAmount: 3000,
+    meta: {
+      unit: 'USD',
+      rationale: 'Missing the triple tax advantage of an HSA if you have a high deductible plan.',
+      action: 'Check if your health plan is HSA-eligible and start contributing.',
+      reasoningTemplate: 'Tax savings + Potential growth over {remainingYears} years',
+    },
+  },
+  {
+    id: 'money-us-2',
+    text: 'How often do you order food delivery or eat out per week?',
+    category: AuditCategory.SAVINGS,
+    displayCategory: 'Financial Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'daily', label: 'Almost daily', lossMultiplier: 2 },
+      { value: 'often', label: '3-4 times a week', lossMultiplier: 1.5 },
+      { value: 'sometimes', label: '1-2 times a week', lossMultiplier: 0.5 },
+      { value: 'rarely', label: 'Rarely (Cook at home)', lossMultiplier: 0 },
+    ],
+    baseAmount: 3000, // Monthly base
+    meta: {
+      unit: 'USD',
+      rationale: 'Eating out costs 3-4x more than cooking at home. Major wealth leak.',
+      action: 'Meal prep on Sundays and delete delivery apps.',
+      reasoningTemplate: 'Avg $20/meal difference x frequency x 52 weeks x {remainingYears} years',
+    },
+  },
+  {
+    id: 'career-us-1',
+    text: 'Have you negotiated your salary or changed jobs in the last 3 years?',
+    category: AuditCategory.CAREER,
+    displayCategory: 'Career Diagnosis',
+    type: 'boolean',
+    baseAmount: 10000, // Annual base diff
+    meta: {
+      unit: 'USD',
+      rationale: 'Staying in the same job often leads to salary stagnation vs market rate.',
+      action: 'Update your LinkedIn and interview once a year to know your worth.',
+      reasoningTemplate: 'Potential 15-20% salary bump missing x {remainingYears} years',
+    },
+  },
+  {
+    id: 'money-us-3',
+    text: 'Do you check your Credit Score regularily?',
+    category: AuditCategory.SAVINGS,
+    displayCategory: 'Financial Diagnosis',
+    type: 'boolean',
+    baseAmount: 5000, // Interest rate impact
+    meta: {
+      unit: 'USD',
+      rationale: 'Low credit score means higher interest rates on mortgages and car loans.',
+      action: 'Use free credit monitoring tools and keep utilization under 30%.',
+      reasoningTemplate: 'Interest rate difference (e.g. 1%) on future loans x {remainingYears} years',
+    },
+  },
+  {
+    id: 'sub-us-1',
+    text: 'Do you have subscriptions (streaming, gym, apps) that you rarely use?',
+    category: AuditCategory.SAVINGS,
+    displayCategory: 'Financial Diagnosis',
     type: 'boolean',
     followUp: {
-      id: 'time-2a',
-      text: '該当する家電を選んでください（複数可）',
-      category: AuditCategory.ENVIRONMENT,
-      displayCategory: '時間・環境診断',
-      type: 'select',
-      multiple: true,
-      options: [
-        { value: 'refrigerator', label: '冷蔵庫', lossMultiplier: 1.2 },
-        { value: 'aircon', label: 'エアコン', lossMultiplier: 1 },
-        { value: 'washer', label: '洗濯機', lossMultiplier: 0.5 },
-        { value: 'tv', label: 'テレビ', lossMultiplier: 0.3 },
-      ],
+      id: 'sub-us-1a',
+      text: 'What is the total monthly cost of these unused subscriptions?',
+      category: AuditCategory.SAVINGS,
+      displayCategory: 'Financial Diagnosis',
+      type: 'number',
       meta: {
-        rationale: '旧式家電の過剰な電気代です。',
-        action: '省エネ性能の高い最新家電への買い替えを検討しましょう。',
-        reasoningTemplate: '年間電気代差額 × {remainingYears}年',
+        unit: 'USD/Month',
+        suggestions: [10, 20, 50, 100],
+        rationale: 'Unused subscriptions are a pure leak of wealth. $50/mo is $600/year.',
+        action: 'Review your bank statement and cancel them today.',
+        reasoningTemplate: '${amount} × 12 months × {remainingYears} years × 1.25 (mental cost)',
       },
     },
     followUpCondition: 'yes',
-    baseAmount: 15000,
     meta: {
-      rationale: '10年前の家電は最新機種より消費電力が30-50%高いです。',
-      action: '省エネ性能の高い家電に買い替えることを検討しましょう。',
-      reasoningTemplate: '年間{amount}円 × {remainingYears}年 × 精神的コスト係数1.25',
+      rationale: 'Subscription fatigue is real. Unused services drain your budget silently.',
+      action: 'Audit your recurring payments.',
+      reasoningTemplate: 'Monthly cost × 12 months × {remainingYears} years',
     },
   },
   {
-    id: 'time-3',
-    text: 'スマホの1日の平均スクリーンタイムはどのくらいですか？',
-    category: AuditCategory.TIME,
-    displayCategory: '時間・環境診断',
+    id: 'health-us-2',
+    text: 'Do you skip dental checkups or cleanings for more than a year?',
+    category: AuditCategory.HEALTH,
+    displayCategory: 'Health Diagnosis',
     type: 'select',
     options: [
-      { value: 'low', label: '2時間未満', lossMultiplier: 0 },
-      { value: 'moderate', label: '2-4時間', lossMultiplier: 0.3 },
-      { value: 'high', label: '4-6時間', lossMultiplier: 0.7 },
-      { value: 'excessive', label: '6時間以上', lossMultiplier: 1 },
+      { value: 'regular', label: 'No, I go regularly', lossMultiplier: 0 },
+      { value: '1year', label: 'Over a year', lossMultiplier: 0.5 },
+      { value: '2years', label: '2-3 years', lossMultiplier: 1 },
+      { value: 'longer', label: '4+ years', lossMultiplier: 2 },
     ],
-    baseAmount: 365000,
+    baseAmount: 5000,
     meta: {
-      rationale: '生産的でないスマホ利用（SNS、ゲームなど）の機会損失です。',
-      action: 'スクリーンタイムのアプリ制限機能を活用しましょう。',
-      reasoningTemplate: '超過時間 × 時給{hourWage}円 × 0.5 × 365日 × {remainingYears}年',
+      unit: 'USD',
+      rationale: 'Preventative care is cheap; Root canals and crowns are expensive ($1k-$2k+).',
+      action: 'Book a cleaning. Most insurance covers it 100%.',
+      reasoningTemplate: 'Expected future treatment cost ${amount} × risk factor',
     },
   },
   {
-    id: 'time-4',
-    text: '通勤時間をどのように活用していますか？',
-    category: AuditCategory.TIME,
-    displayCategory: '時間・環境診断',
+    id: 'health-us-3',
+    text: 'What is your average sleep duration?',
+    category: AuditCategory.HEALTH,
+    displayCategory: 'Health Diagnosis',
     type: 'select',
     options: [
-      { value: 'productive', label: '読書・学習・仕事に活用', lossMultiplier: 0 },
-      { value: 'mixed', label: '半分くらいは有効活用', lossMultiplier: 0.5 },
-      { value: 'entertainment', label: 'SNS・ゲーム・動画視聴', lossMultiplier: 0.8 },
-      { value: 'nothing', label: '特に何もしていない', lossMultiplier: 1 },
+      { value: '7plus', label: '7+ hours', lossMultiplier: 0 },
+      { value: '6to7', label: '6-7 hours', lossMultiplier: 0.3 },
+      { value: '5to6', label: '5-6 hours', lossMultiplier: 0.7 },
+      { value: 'under5', label: 'Under 5 hours', lossMultiplier: 1 },
     ],
-    baseAmount: 100000,
-    meta: {
-      rationale: '通勤時間の有効活用による自己投資機会の損失です。',
-      action: '通勤時間を読書やオーディオブック、語学学習に充てましょう。',
-      reasoningTemplate: '通勤時間1時間/日 × 学習価値{amount}円/年 × {remainingYears}年',
+    followUp: {
+      id: 'health-us-3a',
+      text: 'How many days a week do you feel sleep deprived?',
+      category: AuditCategory.HEALTH,
+      displayCategory: 'Health Diagnosis',
+      type: 'number',
+      meta: {
+        unit: 'days/week',
+        suggestions: [1, 2, 3, 5, 7],
+        rationale: 'Sleep deprivation reduces cognitive performance by 20-30%.',
+        action: 'Prioritize 7 hours of sleep for better earning potential.',
+        reasoningTemplate: '{amount} days/week × 25% productivity loss × Hourly Wage × 52 weeks × {remainingYears} years',
+      },
     },
-  },
-  {
-    id: 'time-5',
-    text: '家事の効率化（時短家電、家事代行など）をしていますか？',
-    category: AuditCategory.ENVIRONMENT,
-    displayCategory: '時間・環境診断',
-    type: 'select',
-    options: [
-      { value: 'optimized', label: '積極的に効率化している', lossMultiplier: 0 },
-      { value: 'some', label: '一部は効率化している', lossMultiplier: 0.5 },
-      { value: 'traditional', label: 'ほぼ手作業', lossMultiplier: 1 },
-    ],
-    baseAmount: 50000,
+    followUpCondition: 'specific',
+    followUpTriggerValues: ['5to6', 'under5'],
     meta: {
-      rationale: '家事にかかる時間の機会損失です。',
-      action: 'ロボット掃除機や食洗機の導入を検討しましょう。',
-      reasoningTemplate: '時短効果 × 時給{hourWage}円 × {remainingYears}年',
-    },
-  },
-  {
-    id: 'time-6',
-    text: '部屋の整理整頓状況はいかがですか？',
-    category: AuditCategory.ENVIRONMENT,
-    displayCategory: '時間・環境診断',
-    type: 'select',
-    options: [
-      { value: 'tidy', label: '常に整理されている', lossMultiplier: 0 },
-      { value: 'mostly', label: 'だいたい片付いている', lossMultiplier: 0.3 },
-      { value: 'messy', label: '散らかりがち', lossMultiplier: 0.7 },
-      { value: 'cluttered', label: '常に散らかっている', lossMultiplier: 1 },
-    ],
-    baseAmount: 30000,
-    meta: {
-      rationale: '散らかった環境による集中力低下・ストレスの影響です。',
-      action: '1日15分の片付けタイムを習慣化しましょう。',
-      reasoningTemplate: '生産性低下{amount}円/年 × {remainingYears}年 × 精神的コスト係数1.25',
-    },
-  },
-  {
-    id: 'time-7',
-    text: '日々の定型作業（Excelの集計、メール返信など）を自動化していますか？',
-    category: AuditCategory.TIME,
-    displayCategory: '時間・環境診断',
-    type: 'boolean',
-    baseAmount: 100000,
-    meta: {
-      rationale: '手作業による時間の浪費を時給換算しています。',
-      action: 'ExcelマクロやRPAツールで業務を効率化しましょう。',
-      reasoningTemplate: '週1時間 × 52週 × 時給{hourWage}円 × {remainingYears}年',
-    },
-  },
-  {
-    id: 'time-8',
-    text: 'タスクの優先順位づけを意識的に行っていますか？',
-    category: AuditCategory.TIME,
-    displayCategory: '時間・環境診断',
-    type: 'select',
-    options: [
-      { value: 'always', label: '常に優先順位をつけている', lossMultiplier: 0 },
-      { value: 'sometimes', label: 'たまに意識する', lossMultiplier: 0.5 },
-      { value: 'rarely', label: 'あまり意識していない', lossMultiplier: 0.8 },
-      { value: 'never', label: '来た順にこなしている', lossMultiplier: 1 },
-    ],
-    baseAmount: 50000,
-    meta: {
-      rationale: '非効率なタスク処理による時間損失です。',
-      action: '毎朝5分でその日の優先タスクを3つ決める習慣をつけましょう。',
-      reasoningTemplate: '年間{amount}円 × {remainingYears}年 × 精神的コスト係数1.25',
+      rationale: 'Health is your biggest asset. Poor sleep equals poor decision making.',
+      action: 'Fix your sleep hygiene.',
+      reasoningTemplate: 'Productivity loss calculation based on sleep debt.',
     },
   },
 ];
 
-// 全質問を統合
+// リージョンごとの質問マッピング
+export const REGION_QUESTIONS: Record<Region, Question[]> = {
+  JP: JP_QUESTIONS,
+  US: US_QUESTIONS,
+};
+
+// 全質問を統合（後方互換性のため）
 export const AUDIT_QUESTIONS: Question[] = [
-  ...ASSET_QUESTIONS,
-  ...HEALTH_QUESTIONS,
-  ...CAREER_QUESTIONS,
-  ...TIME_ENVIRONMENT_QUESTIONS,
+  ...JP_QUESTIONS,
+  ...US_QUESTIONS,
 ];
 
 // カテゴリ別に質問を取得
-export function getQuestionsByCategory(category: DisplayCategory): Question[] {
-  return AUDIT_QUESTIONS.filter(q => q.displayCategory === category);
+export function getQuestionsByCategory(category: string, region: Region = 'JP'): Question[] {
+  return REGION_QUESTIONS[region].filter(q => q.displayCategory === category);
 }
 
 // 質問IDから質問を取得（フォローアップ含む）
 export function findQuestionById(id: string): Question | undefined {
   for (const q of AUDIT_QUESTIONS) {
     if (q.id === id) return q;
-    if (q.followUp && q.followUp.id === id) return q.followUp;
+    if (q.followUp && q.followUp.id === id) return q; // フォローアップ自体を返す
   }
   return undefined;
+}
+
+// 特定リージョンの全質問を取得
+export function getQuestionsByRegion(region: Region): Question[] {
+  return REGION_QUESTIONS[region] || JP_QUESTIONS;
 }

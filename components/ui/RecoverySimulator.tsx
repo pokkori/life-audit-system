@@ -2,13 +2,15 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { Region } from '@/types/audit';
 
 interface RecoverySimulatorProps {
     totalLoss: number;
     maxRecoverable: number;
+    region?: Region;
 }
 
-export function RecoverySimulator({ totalLoss, maxRecoverable }: RecoverySimulatorProps) {
+export function RecoverySimulator({ totalLoss, maxRecoverable, region = 'JP' }: RecoverySimulatorProps) {
     const [executionRate, setExecutionRate] = useState(30);
 
     const recoveredAmount = useMemo(() => {
@@ -18,6 +20,17 @@ export function RecoverySimulator({ totalLoss, maxRecoverable }: RecoverySimulat
     const remainingLoss = useMemo(() => {
         return Math.round(totalLoss - recoveredAmount);
     }, [totalLoss, recoveredAmount]);
+
+    const formatCurrency = (amount: number) => {
+        if (region === 'JP') {
+            if (amount >= 10000) {
+                return <>{(amount / 10000).toLocaleString(undefined, { maximumFractionDigits: 0 })}<span className="text-lg ml-1">万円</span></>;
+            }
+            return <><span className="text-lg mr-1">¥</span>{amount.toLocaleString()}</>;
+        }
+        // US formatting
+        return <><span className="text-lg mr-1">$</span>{amount.toLocaleString()}</>;
+    };
 
     return (
         <div className="bg-gradient-to-br from-indigo-900/40 via-blue-900/20 to-black rounded-2xl p-6 border border-blue-500/30 shadow-2xl relative overflow-hidden mb-8">
@@ -29,27 +42,33 @@ export function RecoverySimulator({ totalLoss, maxRecoverable }: RecoverySimulat
 
             <h3 className="text-lg font-bold text-blue-300 mb-6 font-orbitron tracking-wide flex items-center gap-2">
                 <span className="text-2xl">💡</span>
-                もし今日から対策を始めたら？
+                {region === 'JP' ? 'もし今日から対策を始めたら？' : 'What if you started today?'}
             </h3>
 
             <div className="space-y-8">
                 {/* 数値表示 */}
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-green-950/30 p-4 rounded-xl border border-green-500/30 text-center">
-                        <p className="text-[10px] text-green-400 font-bold mb-1 uppercase tracking-tighter">Recovered Amount</p>
-                        <p className="text-xl md:text-2xl font-black text-green-400 font-roboto-mono">
-                            <span className="text-sm mr-1">¥</span>
-                            {recoveredAmount.toLocaleString()}
-                        </p>
-                        <p className="text-[10px] text-green-500/70 mt-1">生涯で取り戻せる金額</p>
+                {/* 数値表示 - Force Vertical Stack for safety */}
+                {/* 数値表示 - Force Vertical Stack for safety */}
+                {/* 数値表示 - Force Vertical Stack (Block Layout) */}
+                {/* 数値表示 - Force Vertical Stack (Inline Styles & Version Marker) */}
+                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: '1.5rem' }}>
+                    <div className="bg-green-950/30 p-4 rounded-xl border border-green-500/30 text-center w-full">
+                        <p className="text-xs text-green-400 font-bold mb-1 uppercase tracking-tighter">Recovered Amount (v2)</p>
+                        <div className="flex justify-center items-baseline w-full px-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-green-500/20">
+                            <p className="text-2xl sm:text-3xl font-black text-green-400 font-roboto-mono tracking-tighter whitespace-nowrap">
+                                {formatCurrency(recoveredAmount)}
+                            </p>
+                        </div>
+                        <p className="text-xs text-green-500/70 mt-1">{region === 'JP' ? '生涯で取り戻せる金額' : 'Potential Lifetime Recovery'}</p>
                     </div>
-                    <div className="bg-red-950/30 p-4 rounded-xl border border-red-500/30 text-center">
-                        <p className="text-[10px] text-red-400 font-bold mb-1 uppercase tracking-tighter">Residual Loss</p>
-                        <p className="text-xl md:text-2xl font-black text-gray-300 font-roboto-mono">
-                            <span className="text-sm mr-1">¥</span>
-                            {remainingLoss.toLocaleString()}
-                        </p>
-                        <p className="text-[10px] text-red-500/70 mt-1">残ってしまう生涯損失</p>
+                    <div className="bg-red-950/30 p-4 rounded-xl border border-red-500/30 text-center w-full">
+                        <p className="text-xs text-red-400 font-bold mb-1 uppercase tracking-tighter">Residual Loss (v2)</p>
+                        <div className="flex justify-center items-baseline w-full px-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-red-500/20">
+                            <p className="text-xl sm:text-2xl font-black text-gray-400 font-roboto-mono tracking-tighter whitespace-nowrap">
+                                {formatCurrency(remainingLoss)}
+                            </p>
+                        </div>
+                        <p className="text-xs text-red-500/70 mt-1">{region === 'JP' ? '残ってしまう生涯損失' : 'Remaining Lifetime Loss'}</p>
                     </div>
                 </div>
 

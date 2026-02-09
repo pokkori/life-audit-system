@@ -2,24 +2,32 @@
 
 import html2canvas from 'html2canvas';
 
+import { Locale } from '@/types/audit';
+import { getTranslations } from '@/lib/i18n';
+
 interface ShareButtonsProps {
   totalLoss: number;
   lossAnalogy: string;
   topRiskCategory: string;
   resultCardId?: string;
+  locale?: Locale;
 }
 
 export function ShareButtons({
   totalLoss,
   lossAnalogy,
   topRiskCategory,
-  resultCardId = 'result-card'
+  resultCardId = 'result-card',
+  locale = 'ja-JP'
 }: ShareButtonsProps) {
   const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
   const formattedLoss = Math.round(totalLoss).toLocaleString();
+  const t = getTranslations(locale);
 
   // 統一シェア文言
-  const shareText = `生涯損失額は【¥${formattedLoss}】でした。最大のリスクは【${topRiskCategory}】。\nあなたも人生の脆弱性をスキャンしませんか？ #人生の診断レポート`;
+  const shareText = t.share_message_template
+    .replace('{loss}', `${t.currency_symbol}${formattedLoss}`)
+    .replace('{risk}', topRiskCategory);
 
   // X (Twitter)
   const shareOnTwitter = () => {
