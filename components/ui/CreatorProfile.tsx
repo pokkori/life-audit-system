@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export function CreatorProfile() {
     return (
         <div className="mt-16 pt-8 border-t border-gray-800">
@@ -23,6 +25,14 @@ export function CreatorProfile() {
                     このシステムは、レボーナの独断と偏見、そして1ナノグラムの良心によって爆誕しました。<br />
                     あなたの「明日から本気出す」というファンタジーが生み出した、無慈悲な損失額という名の現実をデバッグします。
                 </p>
+                <div className="mt-8 flex justify-center gap-6">
+                    <Link
+                        href="/legal"
+                        className="text-[10px] text-gray-600 hover:text-amber-500 transition-colors duration-200 font-orbitron tracking-widest"
+                    >
+                        PRIVACY & TERMS
+                    </Link>
+                </div>
             </div>
         </div>
     );
