@@ -37,17 +37,17 @@ const RANK_CONFIG: RankInfo[] = [
   { rank: 'D', title: '優秀な自己管理', color: '#0099FF', glowColor: '#0099FF80', description: '素晴らしい習慣です', gradient: 'from-blue-900 via-blue-600 to-cyan-500' },
 ];
 
-// アフィリエイトリンク
+// アフィリエイトリンク（高単価案件への最適化）
 const AFFILIATE_LINKS: Record<AuditCategory, { title: string; link: string; icon: string; actionLabel: string }> = {
-  [AuditCategory.INVESTMENT]: { title: 'ネット証券で新NISA口座を開設', link: 'https://www.rakuten-sec.co.jp/', icon: '📈', actionLabel: '今すぐ口座開設' },
-  [AuditCategory.SAVINGS]: { title: '家計簿アプリで支出を見直す', link: 'https://moneyforward.com/', icon: '💰', actionLabel: 'アプリをダウンロード' },
-  [AuditCategory.HEALTH]: { title: 'パーソナルジムで運動習慣を確立', link: 'https://www.rizap.jp/', icon: '🏃', actionLabel: '無料カウンセリング' },
-  [AuditCategory.CAREER]: { title: '転職サイトで市場価値を確認', link: 'https://www.bizreach.jp/', icon: '💼', actionLabel: '市場価値を診断' },
-  [AuditCategory.TIME]: { title: '時短家電で時間を取り戻す', link: 'https://www.amazon.co.jp/', icon: '⏰', actionLabel: 'Amazonで探す' },
-  [AuditCategory.ENVIRONMENT]: { title: '整理収納サービスを試す', link: 'https://curama.jp/', icon: '🏠', actionLabel: 'プロに依頼する' },
-  [AuditCategory.LEARNING]: { title: 'オンライン学習で市場価値を高める', link: 'https://www.udemy.com/', icon: '📚', actionLabel: '講座を探す' },
-  [AuditCategory.RELATIONSHIP]: { title: 'コーチングで人間関係を改善', link: 'https://menta.work/', icon: '🤝', actionLabel: 'メンターを探す' },
-  [AuditCategory.HOUSEHOLD]: { title: '家事代行サービスを試す', link: 'https://casy.co.jp/', icon: '🧹', actionLabel: 'サービスを予約' },
+  [AuditCategory.INVESTMENT]: { title: 'ネット証券で資産運用を開始', link: 'https://www.rakuten-sec.co.jp/', icon: '📈', actionLabel: '新NISA口座を開設' },
+  [AuditCategory.SAVINGS]: { title: '住宅ローン借り換えで固定費を削減', link: 'https://mogecheck.jp/', icon: '🏠', actionLabel: '無料シミュレーション' },
+  [AuditCategory.HEALTH]: { title: 'パーソナルジムで健康寿命を延ばす', link: 'https://www.rizap.jp/', icon: '🏃', actionLabel: '無料カウンセリング' },
+  [AuditCategory.CAREER]: { title: 'ハイクラス転職で年収を最大化', link: 'https://www.bizreach.jp/', icon: '💼', actionLabel: '市場価値を診断' },
+  [AuditCategory.TIME]: { title: '時短家電で自由な時間を創出', link: 'https://www.amazon.co.jp/', icon: '⏰', actionLabel: '時短アイテムを探す' },
+  [AuditCategory.ENVIRONMENT]: { title: '不用品買取で居住環境を整える', link: 'https://www.treasure-f.com/', icon: '📦', actionLabel: '査定を依頼する' },
+  [AuditCategory.LEARNING]: { title: 'オンライン学習で希少スキルを習得', link: 'https://www.udemy.com/', icon: '📚', actionLabel: 'おすすめ講座をチェック' },
+  [AuditCategory.RELATIONSHIP]: { title: '専門家への相談で悩みを解決', link: 'https://menta.work/', icon: '🤝', actionLabel: '相談相手を探す' },
+  [AuditCategory.HOUSEHOLD]: { title: '家事代行で心にゆとりを', link: 'https://casy.co.jp/', icon: '🧹', actionLabel: '初回の予約をする' },
 };
 
 // カテゴリアイコン
@@ -128,6 +128,7 @@ export class AuditEngine {
     const recommendedPatches = this.generateRecommendedPatches(breakdown);
     const rank = calculateRank(totalFinancialLoss);
     const categoryBreakdown = this.generateCategoryBreakdown(breakdown, totalFinancialLoss);
+    const maxRecoverableLoss = safeNumber(totalFinancialLoss * 0.82); // 理論上の最大回復率を82%に設定
 
     return {
       totalFinancialLoss: safeNumber(totalFinancialLoss),
@@ -142,6 +143,7 @@ export class AuditEngine {
       rank,
       totalDiagnosedUsers: 0,
       categoryBreakdown,
+      maxRecoverableLoss,
     };
   }
 

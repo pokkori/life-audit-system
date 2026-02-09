@@ -93,6 +93,7 @@ export interface AuditResultReport {
   totalDiagnosedUsers: number;
   remainingYears: number;
   categoryBreakdown: CategoryBreakdown[];
+  maxRecoverableLoss: number; // 理論上の最大回復可能額
 }
 
 export interface UserProfile {
