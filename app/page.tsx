@@ -21,7 +21,6 @@ const STORAGE_KEY = 'life_audit_state';
 
 function AgeInputForm({ onSubmit }: { onSubmit: (age: number) => void }) {
   const [age, setAge] = useState('48');
-  const [isManual, setIsManual] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,51 +31,35 @@ function AgeInputForm({ onSubmit }: { onSubmit: (age: number) => void }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-      <div className="flex items-center space-x-2">
-        <div className="relative flex-1 text-left">
-          {isManual ? (
-            <div className="relative">
-              <input
-                type="number"
-                value={age}
-                onChange={e => setAge(e.target.value)}
-                placeholder="例: 48"
-                className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12 appearance-none"
-                required
-                min="1"
-                max="99"
-                autoFocus
-              />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">歳</span>
-            </div>
-          ) : (
-            <div className="relative">
-              <select
-                value={age}
-                onChange={e => setAge(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 appearance-none cursor-pointer"
-              >
-                {Array.from({ length: 85 }, (_, i) => i + 10).map(val => (
-                  <option key={val} value={val}>{val} 歳 {val === 48 ? ' (日本平均)' : ''}</option>
-                ))}
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none border-t-4 border-t-white border-x-4 border-x-transparent" />
-            </div>
-          )}
+    <div className="w-full max-w-sm mx-auto">
+      <form onSubmit={handleSubmit} className="flex items-center space-x-3">
+        <div className="relative flex-1">
+          <select
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            className="w-full px-6 py-4 bg-gray-800 text-white border-2 border-green-500/50 rounded-xl focus:outline-none focus:ring-4 focus:ring-green-500/20 text-xl font-bold appearance-none cursor-pointer hover:border-green-400 transition-colors shadow-inner"
+          >
+            {Array.from({ length: 85 }, (_, i) => i + 10).map(val => (
+              <option key={val} value={val} className="bg-gray-800">
+                {val} 歳 {val === 48 ? ' (日本平均)' : ''}
+              </option>
+            ))}
+          </select>
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-green-500">
+            <ChevronDown size={28} />
+          </div>
         </div>
-        <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors whitespace-nowrap shadow-lg shadow-green-500/20">
-          診断を始める
+        <button
+          type="submit"
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-xl transition-all text-xl shadow-xl shadow-green-500/30 transform hover:scale-105 active:scale-95 whitespace-nowrap"
+        >
+          開始
         </button>
-      </div>
-      <button
-        type="button"
-        onClick={() => setIsManual(!isManual)}
-        className="text-xs text-gray-400 hover:text-green-400 transition-colors underline text-center"
-      >
-        {isManual ? 'リストから選択する' : '数字を直接入力する'}
-      </button>
-    </form>
+      </form>
+      <p className="text-[10px] text-gray-500 mt-2 text-center opacity-60">
+        ※PCではキーボードでも数字選択が可能です
+      </p>
+    </div>
   );
 }
 
