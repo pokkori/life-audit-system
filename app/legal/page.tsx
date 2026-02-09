@@ -46,7 +46,7 @@ export default function LegalPage() {
                         href="/"
                         className="text-amber-500 hover:text-amber-400 transition-colors duration-200 font-orbitron tracking-widest"
                     >
-                        &lt; BACK TO AUDIT
+                        &lt; BACK TO DIAGNOSIS
                     </Link>
                 </footer>
             </div>

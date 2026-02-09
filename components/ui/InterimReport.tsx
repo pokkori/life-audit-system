@@ -20,7 +20,7 @@ export function InterimReport({ currentLoss, questionCount, onContinue }: Interi
                 </div>
 
                 <h2 className="text-xl md:text-2xl font-bold text-gray-300 mb-6 font-orbitron">
-                    {questionCount}問目までの監査結果
+                    {questionCount}問目までの診断結果
                 </h2>
 
                 <div className="mb-8">
@@ -36,7 +36,7 @@ export function InterimReport({ currentLoss, questionCount, onContinue }: Interi
                 <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-gray-700">
                     <p className="text-gray-300 leading-relaxed italic">
                         「今のままだと、あなたは生涯でこれだけの金額をドブに捨て続けていることになります。<br />
-                        残りの監査を完了して、損失を食い止めるための具体的な対策を確認しましょう。」
+                        残りの診断を完了して、損失を食い止めるための具体的な対策を確認しましょう。」
                     </p>
                 </div>
 
@@ -46,7 +46,7 @@ export function InterimReport({ currentLoss, questionCount, onContinue }: Interi
                     onClick={onContinue}
                     className="w-full py-4 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold rounded-xl shadow-lg shadow-amber-900/20 transition-all font-orbitron tracking-widest"
                 >
-                    監査を続行する
+                    診断を続行する
                 </motion.button>
             </div>
         </div>

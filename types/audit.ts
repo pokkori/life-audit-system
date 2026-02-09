@@ -1,5 +1,5 @@
-// DisplayCategory - 4つの監査カテゴリ
-export type DisplayCategory = '資産監査' | '健康監査' | 'キャリア監査' | '時間・環境監査';
+// DisplayCategory - 4つの診断カテゴリ
+export type DisplayCategory = '資産診断' | '健康診断' | 'キャリア診断' | '時間・環境診断';
 
 // AuditCategory - 内部カテゴリ
 export enum AuditCategory {

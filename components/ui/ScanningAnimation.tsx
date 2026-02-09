@@ -30,7 +30,7 @@ export function ScanningAnimation({ onComplete }: { onComplete: () => void }) {
     <div className="w-full max-w-md mx-auto py-12 flex flex-col items-center justify-center">
       <div className="w-full mb-8">
         <p className="text-center font-orbitron text-amber-500 text-lg mb-4 animate-pulse">
-          監査結果を算出中...
+          診断結果を算出中...
         </p>
         <ProgressBar value={progress} />
       </div>

@@ -49,9 +49,9 @@ export function AuditReport({ report, age }: { report: AuditResultReport, age: n
                 <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6">
                     <div className="text-center sm:text-left flex-1">
                         <div className="inline-block p-1 px-2 mb-4 rounded bg-amber-500/10 border border-amber-500/30">
-                            <p className="text-[10px] text-amber-500 font-bold tracking-[0.2em] font-orbitron uppercase">Official Audit Document</p>
+                            <p className="text-[10px] text-amber-500 font-bold tracking-[0.2em] font-orbitron uppercase">Official Diagnosis Document</p>
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-300 mb-2 tracking-widest font-orbitron">生涯損失 監査レポート</h2>
+                        <h2 className="text-2xl font-bold text-gray-300 mb-2 tracking-widest font-orbitron">生涯損失 診断レポート</h2>
                         <p className="text-gray-400">あなたの生涯（あと{remainingYears}年間）の推定損失額</p>
                     </div>
 

@@ -52,10 +52,10 @@ const AFFILIATE_LINKS: Record<AuditCategory, { title: string; link: string; icon
 
 // カテゴリアイコン
 const CATEGORY_ICONS: Record<DisplayCategory, string> = {
-  '資産監査': '💎',
-  '健康監査': '❤️',
-  'キャリア監査': '🚀',
-  '時間・環境監査': '⏱️',
+  '資産診断': '💎',
+  '健康診断': '❤️',
+  'キャリア診断': '🚀',
+  '時間・環境診断': '⏱️',
 };
 
 /**

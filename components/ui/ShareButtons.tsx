@@ -19,7 +19,7 @@ export function ShareButtons({
   const formattedLoss = Math.round(totalLoss).toLocaleString();
 
   // 統一シェア文言
-  const shareText = `生涯損失額は【¥${formattedLoss}】でした。最大のリスクは【${topRiskCategory}】。\nあなたも人生の脆弱性をスキャンしませんか？ #人生の監査レポート`;
+  const shareText = `生涯損失額は【¥${formattedLoss}】でした。最大のリスクは【${topRiskCategory}】。\nあなたも人生の脆弱性をスキャンしませんか？ #人生の診断レポート`;
 
   // X (Twitter)
   const shareOnTwitter = () => {

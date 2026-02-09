@@ -29,14 +29,14 @@ export interface Question {
 
 
 // ========================================
-// 資産監査（8問）
+// 資産診断（8問）
 // ========================================
 const ASSET_QUESTIONS: Question[] = [
   {
     id: 'asset-1',
     text: '新NISA（つみたて投資枠）やiDeCoを活用していますか？',
     category: AuditCategory.INVESTMENT,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'select',
     options: [
       { value: 'both', label: '両方活用している', lossMultiplier: 0 },
@@ -48,7 +48,7 @@ const ASSET_QUESTIONS: Question[] = [
       id: 'asset-1a',
       text: 'もし毎月積み立てるとしたら、いくら投資できそうですか？',
       category: AuditCategory.INVESTMENT,
-      displayCategory: '資産監査',
+      displayCategory: '資産診断',
       type: 'number',
       meta: {
         unit: '円/月',
@@ -70,7 +70,7 @@ const ASSET_QUESTIONS: Question[] = [
     id: 'asset-2',
     text: 'クレジットカードのポイントを効率的に貯めて活用していますか？',
     category: AuditCategory.SAVINGS,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'select',
     options: [
       { value: 'optimized', label: '還元率を意識して使い分けている', lossMultiplier: 0 },
@@ -89,13 +89,13 @@ const ASSET_QUESTIONS: Question[] = [
     id: 'asset-3',
     text: '利用頻度が低い（月1回未満）のサブスクリプションを放置していますか？',
     category: AuditCategory.SAVINGS,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'boolean',
     followUp: {
       id: 'asset-3a',
       text: '放置しているサブスクの合計月額料金はいくらですか？',
       category: AuditCategory.SAVINGS,
-      displayCategory: '資産監査',
+      displayCategory: '資産診断',
       type: 'number',
       meta: {
         unit: '円/月',
@@ -116,7 +116,7 @@ const ASSET_QUESTIONS: Question[] = [
     id: 'asset-4',
     text: 'ATMの時間外手数料や振込手数料をどのくらい支払っていますか？',
     category: AuditCategory.SAVINGS,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'select',
     options: [
       { value: 'never', label: '無料の方法を使っている', lossMultiplier: 0 },
@@ -135,7 +135,7 @@ const ASSET_QUESTIONS: Question[] = [
     id: 'asset-5',
     text: '特に目的もなく、週3回以上コンビニで買い物をしますか？',
     category: AuditCategory.SAVINGS,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'boolean',
     baseAmount: 36000,
     meta: {
@@ -148,7 +148,7 @@ const ASSET_QUESTIONS: Question[] = [
     id: 'asset-6',
     text: '賞味期限切れで食材を捨てることがどのくらいありますか？',
     category: AuditCategory.SAVINGS,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'select',
     options: [
       { value: 'never', label: 'ほぼない', lossMultiplier: 0 },
@@ -167,7 +167,7 @@ const ASSET_QUESTIONS: Question[] = [
     id: 'asset-7',
     text: 'ふるさと納税を上限額まで活用していますか？',
     category: AuditCategory.SAVINGS,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'boolean',
     baseAmount: 30000,
     meta: {
@@ -180,7 +180,7 @@ const ASSET_QUESTIONS: Question[] = [
     id: 'asset-8',
     text: '生命保険・医療保険を3年以上見直していませんか？',
     category: AuditCategory.SAVINGS,
-    displayCategory: '資産監査',
+    displayCategory: '資産診断',
     type: 'boolean',
     baseAmount: 50000,
     meta: {
@@ -192,14 +192,14 @@ const ASSET_QUESTIONS: Question[] = [
 ];
 
 // ========================================
-// 健康監査（8問）
+// 健康診断（8問）
 // ========================================
 const HEALTH_QUESTIONS: Question[] = [
   {
     id: 'health-1',
     text: '歯科検診やクリーニングをどのくらい先延ばしにしていますか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'select',
     options: [
       { value: 'regular', label: '定期的に通院している（半年に1回以上）', lossMultiplier: 0 },
@@ -218,7 +218,7 @@ const HEALTH_QUESTIONS: Question[] = [
     id: 'health-2',
     text: '平均睡眠時間はどのくらいですか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'select',
     options: [
       { value: '7plus', label: '7時間以上', lossMultiplier: 0 },
@@ -230,7 +230,7 @@ const HEALTH_QUESTIONS: Question[] = [
       id: 'health-2a',
       text: '睡眠不足を感じる日が週に何日ありますか？',
       category: AuditCategory.HEALTH,
-      displayCategory: '健康監査',
+      displayCategory: '健康診断',
       type: 'number',
       meta: {
         unit: '日/週',
@@ -252,7 +252,7 @@ const HEALTH_QUESTIONS: Question[] = [
     id: 'health-3',
     text: '運動習慣はありますか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'select',
     options: [
       { value: 'active', label: '週3回以上運動している', lossMultiplier: 0 },
@@ -264,7 +264,7 @@ const HEALTH_QUESTIONS: Question[] = [
       id: 'health-3a',
       text: '運動しない主な理由は何ですか？',
       category: AuditCategory.HEALTH,
-      displayCategory: '健康監査',
+      displayCategory: '健康診断',
       type: 'select',
       options: [
         { value: 'time', label: '時間がない', lossMultiplier: 1 },
@@ -291,7 +291,7 @@ const HEALTH_QUESTIONS: Question[] = [
     id: 'health-4',
     text: '健康診断で「要再検査」「要精密検査」が出た場合、すぐに受診していますか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'select',
     options: [
       { value: 'immediate', label: 'すぐに受診している', lossMultiplier: 0 },
@@ -310,7 +310,7 @@ const HEALTH_QUESTIONS: Question[] = [
     id: 'health-5',
     text: '食事の栄養バランスについてどの程度意識していますか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'select',
     options: [
       { value: 'careful', label: 'バランスを考えて食事している', lossMultiplier: 0 },
@@ -329,7 +329,7 @@ const HEALTH_QUESTIONS: Question[] = [
     id: 'health-6',
     text: '喫煙・過度な飲酒の習慣はありますか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'select',
     options: [
       { value: 'none', label: 'どちらもない', lossMultiplier: 0 },
@@ -348,7 +348,7 @@ const HEALTH_QUESTIONS: Question[] = [
     id: 'health-7',
     text: 'ストレス解消やメンタルヘルスケアを意識的に行っていますか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'boolean',
     baseAmount: 50000,
     meta: {
@@ -361,7 +361,7 @@ const HEALTH_QUESTIONS: Question[] = [
     id: 'health-8',
     text: '持病や慢性的な症状を放置していませんか？',
     category: AuditCategory.HEALTH,
-    displayCategory: '健康監査',
+    displayCategory: '健康診断',
     type: 'boolean',
     baseAmount: 150000,
     meta: {
@@ -373,14 +373,14 @@ const HEALTH_QUESTIONS: Question[] = [
 ];
 
 // ========================================
-// キャリア監査（8問）
+// キャリア診断（8問）
 // ========================================
 const CAREER_QUESTIONS: Question[] = [
   {
     id: 'career-1',
     text: '転職や年収アップについてどのように考えていますか？',
     category: AuditCategory.CAREER,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'select',
     options: [
       { value: 'satisfied', label: '現職に満足している', lossMultiplier: 0 },
@@ -392,7 +392,7 @@ const CAREER_QUESTIONS: Question[] = [
       id: 'career-1a',
       text: '転職した場合、年収がいくら上がると思いますか？',
       category: AuditCategory.CAREER,
-      displayCategory: 'キャリア監査',
+      displayCategory: 'キャリア診断',
       type: 'number',
       meta: {
         unit: '万円/年',
@@ -414,7 +414,7 @@ const CAREER_QUESTIONS: Question[] = [
     id: 'career-2',
     text: '英語学習についてどのような状況ですか？',
     category: AuditCategory.LEARNING,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'select',
     options: [
       { value: 'fluent', label: 'ビジネスレベルで使える', lossMultiplier: 0 },
@@ -433,7 +433,7 @@ const CAREER_QUESTIONS: Question[] = [
     id: 'career-3',
     text: 'IT・デジタルスキル（Excel、プログラミング、データ分析など）の習得状況は？',
     category: AuditCategory.LEARNING,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'select',
     options: [
       { value: 'advanced', label: '業務で高度に活用している', lossMultiplier: 0 },
@@ -452,13 +452,13 @@ const CAREER_QUESTIONS: Question[] = [
     id: 'career-4',
     text: '「いつか取ろう」と思っている資格を半年以上先延ばしにしていますか？',
     category: AuditCategory.CAREER,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'boolean',
     followUp: {
       id: 'career-4a',
       text: '目指している資格のジャンルは？',
       category: AuditCategory.CAREER,
-      displayCategory: 'キャリア監査',
+      displayCategory: 'キャリア診断',
       type: 'select',
       options: [
         { value: 'national', label: '国家資格（士業など）', lossMultiplier: 2 },
@@ -484,7 +484,7 @@ const CAREER_QUESTIONS: Question[] = [
     id: 'career-5',
     text: '自分の履歴書・職務経歴書を1年以上更新していませんか？',
     category: AuditCategory.CAREER,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'boolean',
     baseAmount: 200000,
     meta: {
@@ -497,7 +497,7 @@ const CAREER_QUESTIONS: Question[] = [
     id: 'career-6',
     text: '気乗りしない飲み会や付き合いにどのくらい参加していますか？',
     category: AuditCategory.RELATIONSHIP,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'select',
     options: [
       { value: 'never', label: '断れている/そもそもない', lossMultiplier: 0 },
@@ -516,7 +516,7 @@ const CAREER_QUESTIONS: Question[] = [
     id: 'career-7',
     text: '副業・複業への取り組み状況は？',
     category: AuditCategory.CAREER,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'select',
     options: [
       { value: 'active', label: '副業で収入を得ている', lossMultiplier: 0 },
@@ -535,7 +535,7 @@ const CAREER_QUESTIONS: Question[] = [
     id: 'career-8',
     text: '年間の自己投資額（書籍、セミナー、オンライン講座など）はいくらですか？',
     category: AuditCategory.LEARNING,
-    displayCategory: 'キャリア監査',
+    displayCategory: 'キャリア診断',
     type: 'number',
     meta: {
       unit: '円/年',
@@ -548,14 +548,14 @@ const CAREER_QUESTIONS: Question[] = [
 ];
 
 // ========================================
-// 時間・環境監査（8問）
+// 時間・環境診断（8問）
 // ========================================
 const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
   {
     id: 'time-1',
     text: '探し物に費やす時間はどのくらいですか？',
     category: AuditCategory.TIME,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'select',
     options: [
       { value: 'none', label: 'ほとんどない', lossMultiplier: 0 },
@@ -574,13 +574,13 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
     id: 'time-2',
     text: '10年以上前の古い家電を使い続けていますか？',
     category: AuditCategory.ENVIRONMENT,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'boolean',
     followUp: {
       id: 'time-2a',
       text: '該当する家電を選んでください（複数可）',
       category: AuditCategory.ENVIRONMENT,
-      displayCategory: '時間・環境監査',
+      displayCategory: '時間・環境診断',
       type: 'select',
       multiple: true,
       options: [
@@ -607,7 +607,7 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
     id: 'time-3',
     text: 'スマホの1日の平均スクリーンタイムはどのくらいですか？',
     category: AuditCategory.TIME,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'select',
     options: [
       { value: 'low', label: '2時間未満', lossMultiplier: 0 },
@@ -626,7 +626,7 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
     id: 'time-4',
     text: '通勤時間をどのように活用していますか？',
     category: AuditCategory.TIME,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'select',
     options: [
       { value: 'productive', label: '読書・学習・仕事に活用', lossMultiplier: 0 },
@@ -645,7 +645,7 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
     id: 'time-5',
     text: '家事の効率化（時短家電、家事代行など）をしていますか？',
     category: AuditCategory.ENVIRONMENT,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'select',
     options: [
       { value: 'optimized', label: '積極的に効率化している', lossMultiplier: 0 },
@@ -663,7 +663,7 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
     id: 'time-6',
     text: '部屋の整理整頓状況はいかがですか？',
     category: AuditCategory.ENVIRONMENT,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'select',
     options: [
       { value: 'tidy', label: '常に整理されている', lossMultiplier: 0 },
@@ -682,7 +682,7 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
     id: 'time-7',
     text: '日々の定型作業（Excelの集計、メール返信など）を自動化していますか？',
     category: AuditCategory.TIME,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'boolean',
     baseAmount: 100000,
     meta: {
@@ -695,7 +695,7 @@ const TIME_ENVIRONMENT_QUESTIONS: Question[] = [
     id: 'time-8',
     text: 'タスクの優先順位づけを意識的に行っていますか？',
     category: AuditCategory.TIME,
-    displayCategory: '時間・環境監査',
+    displayCategory: '時間・環境診断',
     type: 'select',
     options: [
       { value: 'always', label: '常に優先順位をつけている', lossMultiplier: 0 },

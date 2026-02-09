@@ -8,10 +8,10 @@ const robotoMono = Roboto_Mono({ subsets: ["latin"], variable: '--font-roboto-mo
 const orbitron = Orbitron({ subsets: ["latin"], variable: '--font-orbitron' });
 
 export const metadata: Metadata = {
-  title: "Life Audit System | 人生の監査システム",
+  title: "Life Diagnosis System | 人生の診断システム",
   description: "あなたの「先延ばし」による生涯損失額を診断します。資産、健康、キャリア、時間の4つの観点からリスクを可視化。",
   openGraph: {
-    title: "Life Audit System | 人生の監査システム",
+    title: "Life Diagnosis System | 人生の診断システム",
     description: "私の生涯損失額はいくら...？ あなたの「先延ばし」リスクを今すぐ診断。",
     url: "https://life-audit-system.vercel.app",
     siteName: "Life Audit System",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Life Audit System | 人生の監査システム",
+    title: "Life Diagnosis System | 人生の診断システム",
     description: "あなたの「先延ばし」による生涯損失額を診断します。",
     creator: "@levona_design",
     site: "@levona_design",
