@@ -108,7 +108,7 @@ export function AuditReport({
                     maxRecoverable={report.maxRecoverableLoss}
                     region={region}
                 /> */}
-                <ImprovementRoadmap region={region} />
+                {/* <ImprovementRoadmap region={region} /> */}
             </div>
 
             {/* 推奨対策 */}
