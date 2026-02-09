@@ -12,7 +12,7 @@ import { QuestionCard } from '@/components/ui/QuestionCard';
 import { AuditReport } from '@/components/ui/AuditReport';
 import { ScanningAnimation } from '@/components/ui/ScanningAnimation';
 import { InterimReport } from '@/components/ui/InterimReport';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronDown } from 'lucide-react';
 
 type AnswerValue = boolean | number | (string | number)[];
 type Answer = { questionId: string; value: AnswerValue; };
