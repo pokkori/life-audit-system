@@ -186,7 +186,8 @@ export function AuditReport({
             )}
 
             {/* 損失の項目別詳細 */}
-            <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl p-6 shadow-2xl border border-gray-700">
+            {/* 損失の項目別詳細 (Removed as duplicate) */}
+            {/* <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl p-6 shadow-2xl border border-gray-700">
                 <h3 className="text-lg font-semibold mb-6 text-gray-300 text-center font-orbitron">損失の項目別詳細</h3>
                 <div className="space-y-10">
                     {Object.entries(groupedBreakdown).map(([category, items]) => (
@@ -204,7 +205,7 @@ export function AuditReport({
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {/* SNSシェアボタン */}
             <ShareButtons
