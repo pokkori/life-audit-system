@@ -21,6 +21,8 @@ const STORAGE_KEY = 'life_audit_state';
 
 function AgeInputForm({ onSubmit }: { onSubmit: (age: number) => void }) {
   const [age, setAge] = useState('48');
+  const [isManual, setIsManual] = useState(false);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const ageNum = parseInt(age, 10);
@@ -28,29 +30,51 @@ function AgeInputForm({ onSubmit }: { onSubmit: (age: number) => void }) {
       onSubmit(ageNum);
     }
   };
+
   return (
-    <form onSubmit={handleSubmit} className="flex items-center space-x-2">
-      <div className="relative flex-1 text-left">
-        <input
-          type="number"
-          list="age-options"
-          value={age}
-          onChange={e => setAge(e.target.value)}
-          placeholder="例: 48"
-          className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12 appearance-none"
-          required
-          min="1"
-          max="99"
-        />
-        <datalist id="age-options">
-          {Array.from({ length: 71 }, (_, i) => i + 15).map(val => (
-            <option key={val} value={val}>{val}歳</option>
-          ))}
-        </datalist>
-        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">歳</span>
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <div className="flex items-center space-x-2">
+        <div className="relative flex-1 text-left">
+          {isManual ? (
+            <div className="relative">
+              <input
+                type="number"
+                value={age}
+                onChange={e => setAge(e.target.value)}
+                placeholder="例: 48"
+                className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12 appearance-none"
+                required
+                min="1"
+                max="99"
+                autoFocus
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">歳</span>
+            </div>
+          ) : (
+            <div className="relative">
+              <select
+                value={age}
+                onChange={e => setAge(e.target.value)}
+                className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 appearance-none cursor-pointer"
+              >
+                {Array.from({ length: 85 }, (_, i) => i + 10).map(val => (
+                  <option key={val} value={val}>{val} 歳 {val === 48 ? ' (日本平均)' : ''}</option>
+                ))}
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none border-t-4 border-t-white border-x-4 border-x-transparent" />
+            </div>
+          )}
+        </div>
+        <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors whitespace-nowrap shadow-lg shadow-green-500/20">
+          診断を始める
+        </button>
       </div>
-      <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors whitespace-nowrap shadow-lg shadow-green-500/20">
-        診断を始める
+      <button
+        type="button"
+        onClick={() => setIsManual(!isManual)}
+        className="text-xs text-gray-400 hover:text-green-400 transition-colors underline text-center"
+      >
+        {isManual ? 'リストから選択する' : '数字を直接入力する'}
       </button>
     </form>
   );
