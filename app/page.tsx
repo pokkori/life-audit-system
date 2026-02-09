@@ -316,7 +316,7 @@ export default function Home() {
               </div>
             ) : (
               <button onClick={() => setStep('age-input')} className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-lg transition-colors text-2xl shadow-lg shadow-green-500/20">
-                監査を開始
+                診断を開始
               </button>
             )}
           </motion.div>
