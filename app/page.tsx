@@ -297,14 +297,16 @@ export default function Home() {
       <AnimatePresence mode="wait">
         {step === 'welcome' && (
           <motion.div key="welcome" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} className="text-center">
-            <h1 className="text-3xl md:text-5xl font-bold font-orbitron text-amber-500 mb-2">Life Audit System</h1>
-            <p className="text-gray-400 mt-2 mb-8">あなたの『先延ばし』による生涯損失額を診断します</p>
+            <h1 className="text-2xl md:text-4xl font-bold text-white mb-12 tracking-tight leading-relaxed">
+              あなたの『先延ばし』による<br className="md:hidden" />
+              生涯損失額を診断します
+            </h1>
 
             {isRestored ? (
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-amber-500/30 mb-8 max-w-sm mx-auto">
-                <p className="text-amber-400 mb-4 text-sm">前回の診断データが見つかりました。<br />続きから開始しますか？</p>
+              <div className="bg-gray-800/50 p-6 rounded-xl border border-green-500/30 mb-8 max-w-sm mx-auto">
+                <p className="text-green-400 mb-4 text-sm">前回の診断データが見つかりました。<br />続きから開始しますか？</p>
                 <div className="flex gap-4 justify-center">
-                  <button onClick={handleRestore} className="bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 px-6 rounded-lg transition-colors text-sm">
+                  <button onClick={handleRestore} className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded-lg transition-colors text-sm">
                     続きから再開
                   </button>
                   <button onClick={handleClearRestore} className="text-gray-400 hover:text-white transition-colors text-sm underline">
@@ -313,7 +315,7 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <button onClick={() => setStep('age-input')} className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-lg transition-colors text-xl shadow-lg shadow-amber-500/20">
+              <button onClick={() => setStep('age-input')} className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-lg transition-colors text-2xl shadow-lg shadow-green-500/20">
                 監査を開始
               </button>
             )}
