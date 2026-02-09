@@ -29,9 +29,12 @@ function AgeInputForm({ onSubmit }: { onSubmit: (age: number) => void }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="flex space-x-4">
-      <input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="例: 30" className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" required />
-      <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition-colors">診断を始める</button>
+    <form onSubmit={handleSubmit} className="flex items-center space-x-2">
+      <div className="relative flex-1">
+        <input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="例: 30" className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12" required />
+        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">歳</span>
+      </div>
+      <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors whitespace-nowrap">診断を始める</button>
     </form>
   );
 }
