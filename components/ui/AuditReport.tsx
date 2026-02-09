@@ -115,76 +115,92 @@ export function AuditReport({ report, age }: { report: AuditResultReport, age: n
                     </div>
                 ))}
             </div>
-        </div>
-
-            {/* 推奨対策 */ }
-    {
-        report.recommendedPatches && report.recommendedPatches.length > 0 && (
-            <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl p-6 shadow-2xl border border-gray-700">
-                <h3 className="text-lg font-bold mb-6 text-yellow-400 text-center flex items-center justify-center gap-2 font-orbitron tracking-wide">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    今すぐ始められる対策
-                </h3>
-                <div className="space-y-4">
-                    {report.recommendedPatches.map((patch, index) => {
-                        // 対策による回復可能額を計算（損失額の30%と仮定）
-                        const recoverableAmount = Math.round(patch.potentialRecovery * 0.3).toLocaleString();
-                        return (
-                            <div
-                                key={index}
-                                className="p-6 bg-gradient-to-r from-gray-800 to-gray-750 rounded-lg border-l-4 border-amber-600 shadow-lg"
-                            >
-                                <div className="flex flex-col sm:flex-row items-start justify-between gap-6">
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-2xl">{patch.icon}</span>
-                                            <p className="font-bold text-white text-lg">{patch.title}</p>
-                                        </div>
-                                        <p className="text-sm text-gray-400 mb-4 leading-relaxed">{patch.copy}</p>
-
-                                        <div className="flex flex-col sm:flex-row gap-4 items-center">
-                                            <div className="inline-flex items-center gap-2 px-3 py-2 bg-amber-900/30 border border-amber-500/20 rounded-lg text-amber-500 text-xs font-bold">
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                </svg>
-                                                ライフタイム推定回復額: ¥{recoverableAmount}
+            {/* 推奨対策 */}
+            {report.recommendedPatches && report.recommendedPatches.length > 0 && (
+                <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl p-6 shadow-2xl border border-gray-700">
+                    <h3 className="text-lg font-bold mb-6 text-yellow-400 text-center flex items-center justify-center gap-2 font-orbitron tracking-wide">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        今すぐ始められる対策
+                    </h3>
+                    <div className="space-y-4">
+                        {report.recommendedPatches.map((patch, index) => {
+                            const recoverableAmount = Math.round(patch.potentialRecovery * 0.3).toLocaleString();
+                            return (
+                                <div
+                                    key={index}
+                                    className="p-6 bg-gradient-to-r from-gray-800 to-gray-750 rounded-lg border-l-4 border-amber-600 shadow-lg"
+                                >
+                                    <div className="flex flex-col sm:flex-row items-start justify-between gap-6">
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <span className="text-2xl">{patch.icon}</span>
+                                                <p className="font-bold text-white text-lg">{patch.title}</p>
                                             </div>
+                                            <p className="text-sm text-gray-400 mb-4 leading-relaxed">{patch.copy}</p>
 
-                                            {patch.actionUrl && patch.actionLabel && (
-                                                <a
-                                                    href={patch.actionUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white rounded-full font-bold text-sm transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 group"
-                                                >
-                                                    {patch.actionLabel}
-                                                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7-7 7" />
+                                            <div className="flex flex-col sm:flex-row gap-4 items-center">
+                                                <div className="inline-flex items-center gap-2 px-3 py-2 bg-amber-900/30 border border-amber-500/20 rounded-lg text-amber-500 text-xs font-bold">
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                     </svg>
-                                                </a>
-                                            )}
+                                                    ライフタイム推定回復額: ¥{recoverableAmount}
+                                                </div>
+
+                                                {patch.actionUrl && patch.actionLabel && (
+                                                    <a
+                                                        href={patch.actionUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white rounded-full font-bold text-sm transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 group"
+                                                    >
+                                                        {patch.actionLabel}
+                                                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7-7 7" />
+                                                        </svg>
+                                                    </a>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+
+            {/* 損失の項目別詳細 */}
+            <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl p-6 shadow-2xl border border-gray-700">
+                <h3 className="text-lg font-semibold mb-6 text-gray-300 text-center font-orbitron">損失の項目別詳細</h3>
+                <div className="space-y-10">
+                    {Object.entries(groupedBreakdown).map(([category, items]) => (
+                        <div key={category}>
+                            <h4 className="text-md font-bold text-amber-500 mb-2 pl-2 font-orbitron">{category}</h4>
+                            <div className="space-y-2">
+                                {items.map((itemResult, index) => (
+                                    <AccordionCard
+                                        key={`${itemResult.item.id}-${index}`}
+                                        itemResult={itemResult}
+                                        remainingYears={remainingYears}
+                                    />
+                                ))}
                             </div>
-                        );
-                    })}
+                        </div>
+                    ))}
                 </div>
             </div>
-        )
-    }
 
-    {/* SNSシェアボタン */ }
-    <ShareButtons
-        totalLoss={report.totalFinancialLoss}
-        lossAnalogy={report.lossAnalogy || ''}
-        topRiskCategory={topCategory}
-    />
+            {/* SNSシェアボタン */}
+            <ShareButtons
+                totalLoss={report.totalFinancialLoss}
+                lossAnalogy={report.lossAnalogy || ''}
+                topRiskCategory={topCategory}
+            />
 
-    {/* クリエイタープロフィール */ }
-    <CreatorProfile />
-        </div >
+            {/* クリエイタープロフィール */}
+            <CreatorProfile />
+        </div>
     );
 }
