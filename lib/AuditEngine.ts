@@ -73,7 +73,7 @@ export const REGIONAL_AFFILIATE_LINKS: Record<Region, Partial<Record<AuditCatego
     [AuditCategory.INVESTMENT]: { title: 'DMM FXで資産運用を開始', link: 'https://px.a8.net/svt/ejp?a8mat=4AX74G+4ASQ2A+1WP2+6CHB7', icon: '📈', actionLabel: '無料口座開設(PR)' },
     [AuditCategory.SAVINGS]: { title: '住宅ローン借り換えで固定費を削減', link: 'https://mogecheck.jp/', icon: '🏠', actionLabel: '無料シミュレーション' },
     [AuditCategory.HEALTH]: { title: 'パーソナルジムで健康寿命を延ばす', link: 'https://www.rizap.jp/', icon: '🏃', actionLabel: '無料カウンセリング' },
-    [AuditCategory.CAREER]: { title: 'ハイクラス転職で年収を最大化', link: 'https://www.bizreach.jp/', icon: '💼', actionLabel: '市場価値を診断' },
+    [AuditCategory.CAREER]: { title: 'A8.netで副業を開始', link: 'https://px.a8.net/svt/ejp?a8mat=4AX74G+4A7AGI+0K+ZTNGZ', icon: '💼', actionLabel: '無料会員登録(PR)' },
     [AuditCategory.TIME]: { title: '時短家電で自由な時間を創出', link: 'https://www.amazon.co.jp/', icon: '⏰', actionLabel: '時短アイテムを探す' },
     [AuditCategory.ENVIRONMENT]: { title: '不用品買取で居住環境を整える', link: 'https://www.treasure-f.com/', icon: '📦', actionLabel: '査定を依頼する' },
     [AuditCategory.LEARNING]: { title: 'オンライン学習で希少スキルを習得', link: 'https://www.udemy.com/', icon: '📚', actionLabel: 'おすすめ講座をチェック' },
