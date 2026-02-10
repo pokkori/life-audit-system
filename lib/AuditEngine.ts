@@ -74,7 +74,7 @@ export const REGIONAL_AFFILIATE_LINKS: Record<Region, Partial<Record<AuditCatego
     [AuditCategory.SAVINGS]: { title: '住宅ローン借り換えで固定費を削減', link: 'https://mogecheck.jp/', icon: '🏠', actionLabel: '無料シミュレーション' },
     [AuditCategory.HEALTH]: { title: 'パーソナルジムで健康寿命を延ばす', link: 'https://www.rizap.jp/', icon: '🏃', actionLabel: '無料カウンセリング' },
     [AuditCategory.CAREER]: { title: 'A8.netで副業を開始', link: 'https://px.a8.net/svt/ejp?a8mat=4AX74G+4A7AGI+0K+ZTNGZ', icon: '💼', actionLabel: '無料会員登録(PR)' },
-    [AuditCategory.TIME]: { title: '時短家電で自由な時間を創出', link: 'https://www.amazon.co.jp/', icon: '⏰', actionLabel: '時短アイテムを探す' },
+    [AuditCategory.TIME]: { title: '楽天市場で時短家電を探す', link: 'https://rpx.a8.net/svt/ejp?a8mat=4AX74G+4BE5O2+2HOM+6GRMR&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26020977247_4AX74G_4BE5O2_2HOM_6GRMR%3Fpc%3Dhttp%253A%252F%252Fwww.rakuten.co.jp%252F%26m%3Dhttp%253A%252F%252Fm.rakuten.co.jp%252F', icon: '🛍️', actionLabel: '人気ランキングを見る' },
     [AuditCategory.ENVIRONMENT]: { title: '不用品買取で居住環境を整える', link: 'https://www.treasure-f.com/', icon: '📦', actionLabel: '査定を依頼する' },
     [AuditCategory.LEARNING]: { title: 'オンライン学習で希少スキルを習得', link: 'https://www.udemy.com/', icon: '📚', actionLabel: 'おすすめ講座をチェック' },
     [AuditCategory.RELATIONSHIP]: { title: '専門家への相談で悩みを解決', link: 'https://menta.work/', icon: '🤝', actionLabel: '相談相手を探す' },
