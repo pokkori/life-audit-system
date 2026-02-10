@@ -71,7 +71,7 @@ export interface AffiliateInfo {
 export const REGIONAL_AFFILIATE_LINKS: Record<Region, Partial<Record<AuditCategory, AffiliateInfo>>> = {
   JP: {
     [AuditCategory.INVESTMENT]: { title: 'DMM FXで資産運用を開始', link: 'https://px.a8.net/svt/ejp?a8mat=4AX74G+4ASQ2A+1WP2+6CHB7', icon: '📈', actionLabel: '無料口座開設(PR)' },
-    [AuditCategory.SAVINGS]: { title: '住宅ローン借り換えで固定費を削減', link: 'https://mogecheck.jp/', icon: '🏠', actionLabel: '無料シミュレーション' },
+    [AuditCategory.SAVINGS]: { title: '楽天カードでポイントを最大化', link: 'https://rpx.a8.net/svt/ejp?a8mat=4AX74G+4BE5O2+2HOM+BW8O1&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26020977247_4AX74G_4BE5O2_2HOM_BW8O1%3Fpc%3Dhttps%253A%252F%252Fwww.rakuten-card.co.jp%252F%26m%3Dhttps%253A%252F%252Fwww.rakuten-card.co.jp%252F', icon: '💳', actionLabel: '新規入会キャンペーン' },
     [AuditCategory.HEALTH]: { title: 'パーソナルジムで健康寿命を延ばす', link: 'https://www.rizap.jp/', icon: '🏃', actionLabel: '無料カウンセリング' },
     [AuditCategory.CAREER]: { title: 'A8.netで副業を開始', link: 'https://px.a8.net/svt/ejp?a8mat=4AX74G+4A7AGI+0K+ZTNGZ', icon: '💼', actionLabel: '無料会員登録(PR)' },
     [AuditCategory.TIME]: { title: '楽天市場で時短家電を探す', link: 'https://rpx.a8.net/svt/ejp?a8mat=4AX74G+4BE5O2+2HOM+6GRMR&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26020977247_4AX74G_4BE5O2_2HOM_6GRMR%3Fpc%3Dhttp%253A%252F%252Fwww.rakuten.co.jp%252F%26m%3Dhttp%253A%252F%252Fm.rakuten.co.jp%252F', icon: '🛍️', actionLabel: '人気ランキングを見る' },
