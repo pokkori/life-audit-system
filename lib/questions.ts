@@ -911,7 +911,7 @@ export function getQuestionsByCategory(category: string, region: Region = 'JP'):
 export function findQuestionById(id: string): Question | undefined {
   for (const q of AUDIT_QUESTIONS) {
     if (q.id === id) return q;
-    if (q.followUp && q.followUp.id === id) return q; // フォローアップ自体を返す
+    if (q.followUp && q.followUp.id === id) return q.followUp; // フォローアップ自体を返す
   }
   return undefined;
 }

@@ -348,7 +348,7 @@ export default function AuditApp({ initialLocale = 'ja-JP' }: AuditAppProps) {
           }
         }
 
-        if (baseAmountForEngine > 0 || (typeof answer.value === 'boolean' && answer.value === true)) {
+        if (baseAmountForEngine > 0 || (typeof answer.value === 'boolean' && answer.value === true) || question.type === 'select') {
           auditItems.push({
             id: question.id,
             title: question.text,
