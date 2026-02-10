@@ -888,6 +888,181 @@ const US_QUESTIONS: Question[] = [
       reasoningTemplate: 'Productivity loss calculation based on sleep debt.',
     },
   },
+  {
+    id: 'money-us-4',
+    text: 'Do you carry a balance on your credit cards from month to month?',
+    category: AuditCategory.SAVINGS,
+    displayCategory: 'Financial Diagnosis',
+    type: 'boolean',
+    followUp: {
+      id: 'money-us-4a',
+      text: 'What is your approximate total credit card debt?',
+      category: AuditCategory.SAVINGS,
+      displayCategory: 'Financial Diagnosis',
+      type: 'number',
+      meta: {
+        unit: 'USD',
+        suggestions: [1000, 3000, 5000, 10000],
+        rationale: 'Credit card interest (avg 20%+) destroys wealth faster than any investment can build it.',
+        action: 'Use the Avalanche or Snowball method to pay this off immediately.',
+        reasoningTemplate: 'Debt ${amount} × 20% interest × {remainingYears} years',
+      },
+    },
+    followUpCondition: 'yes',
+    baseAmount: 1000, // Dummy base
+    meta: {
+      rationale: 'High-interest debt is a financial emergency.',
+      action: 'Stop using cards and pay off the balance.',
+      reasoningTemplate: 'Interest payments over time.',
+    },
+  },
+  {
+    id: 'money-us-5',
+    text: 'How often do you make impulse purchases (Amazon, Target, etc.) that you do not need?',
+    category: AuditCategory.SAVINGS,
+    displayCategory: 'Financial Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'daily', label: 'Frequently / Weekly', lossMultiplier: 2.0 },
+      { value: 'monthly', label: 'Once a month', lossMultiplier: 0.5 },
+      { value: 'rarely', label: 'Rarely', lossMultiplier: 0 },
+    ],
+    baseAmount: 2400, // $200/mo
+    meta: {
+      rationale: 'Small impulse buys add up to thousands per year.',
+      action: 'Wait 24 hours before buying anything non-essential.',
+      reasoningTemplate: 'Annual impulse spending ${amount} × {remainingYears} years',
+    },
+  },
+  {
+    id: 'money-us-6',
+    text: 'Have you shopped around for auto/home insurance in the last 2 years?',
+    category: AuditCategory.SAVINGS,
+    displayCategory: 'Financial Diagnosis',
+    type: 'boolean',
+    baseAmount: 500, // Annual savings
+    meta: {
+      rationale: 'Loyalty tax is real. Insurers often creep up rates for existing customers.',
+      action: 'Get quotes from 3 other providers.',
+      reasoningTemplate: 'Potential savings ${amount}/year × {remainingYears} years',
+    },
+  },
+  {
+    id: 'health-us-4',
+    text: 'How often do you exercise (30+ mins)?',
+    category: AuditCategory.HEALTH,
+    displayCategory: 'Health Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'active', label: '3+ times a week', lossMultiplier: 0 },
+      { value: 'moderate', label: '1-2 times a week', lossMultiplier: 0.5 },
+      { value: 'none', label: 'Rarely / Never', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 3000, // Medical costs risk
+    meta: {
+      rationale: 'Lack of exercise increases risk of chronic diseases and lowers energy.',
+      action: 'Start with walking 10k steps or a 30 min daily workout.',
+      reasoningTemplate: 'Future medical risk ${amount}/year × {remainingYears} years',
+    },
+  },
+  {
+    id: 'health-us-5',
+    text: 'Do you smoke or drink alcohol frequently?',
+    category: AuditCategory.HEALTH,
+    displayCategory: 'Health Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'none', label: 'No', lossMultiplier: 0 },
+      { value: 'moderate', label: 'Social drinker', lossMultiplier: 0.5 },
+      { value: 'heavy', label: 'Yes (Smoke or Drink often)', lossMultiplier: 2.5 },
+    ],
+    baseAmount: 2000, // Cost + Health
+    meta: {
+      rationale: 'Vices cost money directly and indirectly through health issues.',
+      action: 'Cut back on consumption to save money and health.',
+      reasoningTemplate: 'Cost & Health Risk ${amount}/year × {remainingYears} years',
+    },
+  },
+  {
+    id: 'career-us-2',
+    text: 'Do you actively network or attend industry events?',
+    category: AuditCategory.CAREER,
+    displayCategory: 'Career Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'active', label: 'Yes, regularly', lossMultiplier: 0 },
+      { value: 'sometimes', label: 'Occasionally', lossMultiplier: 0.5 },
+      { value: 'never', label: 'No, I hate networking', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 5000, // Opportunity cost
+    meta: {
+      rationale: 'Your network is your net worth. Most good jobs are filled via referrals.',
+      action: 'Connect with 1 new person in your field per week.',
+      reasoningTemplate: 'Missed opportunities valued at ${amount}/year × {remainingYears} years',
+    },
+  },
+  {
+    id: 'career-us-3',
+    text: 'Are you actively learning new high-value skills (AI, Coding, Management)?',
+    category: AuditCategory.CAREER,
+    displayCategory: 'Career Diagnosis',
+    type: 'boolean',
+    baseAmount: 10000, // Salary stagnation
+    meta: {
+      rationale: 'Skills depreciate fast. Continuous learning is the only job security.',
+      action: 'Take one course or read one industry book per month.',
+      reasoningTemplate: 'Career stagnation cost ${amount}/year × {remainingYears} years',
+    },
+  },
+  {
+    id: 'career-us-4',
+    text: 'Do you have a side hustle or additional income stream?',
+    category: AuditCategory.CAREER,
+    displayCategory: 'Career Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'yes', label: 'Yes', lossMultiplier: 0 },
+      { value: 'planning', label: 'Planning to start', lossMultiplier: 0.5 },
+      { value: 'no', label: 'No, just my job', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 6000, // $500/mo
+    meta: {
+      rationale: 'Relying on one income source is risky.',
+      action: 'Monetize a hobby or skill (Upwork, Uber, Etsy).',
+      reasoningTemplate: 'Potential side income ${amount}/year × {remainingYears} years',
+    },
+  },
+  {
+    id: 'time-us-1',
+    text: 'How much time do you spend on social media or entertainment daily?',
+    category: AuditCategory.TIME,
+    displayCategory: 'Time & Environment Diagnosis',
+    type: 'select',
+    options: [
+      { value: 'low', label: 'Under 1 hour', lossMultiplier: 0 },
+      { value: 'medium', label: '1-2 hours', lossMultiplier: 0.5 },
+      { value: 'high', label: '3+ hours', lossMultiplier: 2.0 },
+    ],
+    baseAmount: 20000, // Time value
+    meta: {
+      rationale: 'Time is money. Excessive scrolling is a massive opportunity cost.',
+      action: 'Set app limits on your phone.',
+      reasoningTemplate: 'Wasted time value ${amount}/year × Multiplier × {remainingYears} years',
+    },
+  },
+  {
+    id: 'time-us-2',
+    text: 'Do you use your commute time productively (Audiobooks, Podcasts)?',
+    category: AuditCategory.TIME,
+    displayCategory: 'Time & Environment Diagnosis',
+    type: 'boolean',
+    baseAmount: 5000,
+    meta: {
+      rationale: 'Commuting is "found time" for self-education.',
+      action: 'Listen to an educational podcast on your way to work.',
+      reasoningTemplate: 'Learning value ${amount}/year × {remainingYears} years',
+    },
+  },
 ];
 
 // リージョンごとの質問マッピング
