@@ -211,9 +211,11 @@ export default function AuditApp({ initialLocale = 'ja-JP' }: AuditAppProps) {
         baseAmountForEngine = question.baseAmount || 0;
       } else if (question.type === 'select') {
         const option = question.options?.find(o => o.value === answer.value);
-        // Special logic: simple base amount or derived? 
-        // For simplicity in this demo, select might not carry amount unless specified
-        baseAmountForEngine = question.baseAmount || 0;
+        if (question.id === 'career-1a' && typeof answer.value === 'number') {
+          baseAmountForEngine = answer.value;
+        } else {
+          baseAmountForEngine = question.baseAmount || 0;
+        }
       }
 
       if (baseAmountForEngine > 0 || (typeof answer.value === 'boolean' && answer.value === true)) {
@@ -339,7 +341,11 @@ export default function AuditApp({ initialLocale = 'ja-JP' }: AuditAppProps) {
         } else if (question.type === 'boolean' && answer.value === true) {
           baseAmountForEngine = question.baseAmount || 0;
         } else if (question.type === 'select') {
-          baseAmountForEngine = question.baseAmount || 0;
+          if (question.id === 'career-1a' && typeof answer.value === 'number') {
+            baseAmountForEngine = answer.value;
+          } else {
+            baseAmountForEngine = question.baseAmount || 0;
+          }
         }
 
         if (baseAmountForEngine > 0 || (typeof answer.value === 'boolean' && answer.value === true)) {
