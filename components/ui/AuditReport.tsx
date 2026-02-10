@@ -8,6 +8,7 @@ import { CreatorProfile } from './CreatorProfile';
 // import { RecoverySimulator } from './RecoverySimulator';
 // import { ImprovementRoadmap } from './ImprovementRoadmap';
 import { LIFETIME_AGE } from '@/lib/AuditEngine';
+import { getTranslations, formatCurrency } from '@/lib/i18n';
 
 export function AuditReport({
     report,
@@ -20,6 +21,7 @@ export function AuditReport({
     locale?: Locale;
     region?: Region;
 }) {
+    const t = getTranslations(locale);
 
     // NaN防止: remainingYearsの安全な計算
     const remainingYears = useMemo(() => {
@@ -62,10 +64,10 @@ export function AuditReport({
                 <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6">
                     <div className="text-center sm:text-left flex-1">
                         <div className="inline-block p-1 px-2 mb-4 rounded bg-amber-500/10 border border-amber-500/30">
-                            <p className="text-[10px] text-amber-500 font-bold tracking-[0.2em] font-orbitron uppercase">Official Diagnosis Document</p>
+                            <p className="text-[10px] text-amber-500 font-bold tracking-[0.2em] font-orbitron uppercase">{t.report.official_doc}</p>
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-300 mb-2 tracking-widest font-orbitron">生涯損失 診断レポート</h2>
-                        <p className="text-gray-400">あなたの生涯（あと{remainingYears}年間）の推定損失額</p>
+                        <h2 className="text-2xl font-bold text-gray-300 mb-2 tracking-widest font-orbitron">{t.report.title}</h2>
+                        <p className="text-gray-400">{t.report.subtitle.replace('{years}', remainingYears.toString())}</p>
                     </div>
 
                     {/* コンパクトなランクバッジ */}
@@ -76,7 +78,7 @@ export function AuditReport({
                             boxShadow: `0 0 20px ${report.rank.glowColor}`
                         }}>
                         <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
-                        <span className="text-[10px] font-bold text-gray-400 font-orbitron leading-none mb-1 tracking-widest uppercase">Rank</span>
+                        <span className="text-[10px] font-bold text-gray-400 font-orbitron leading-none mb-1 tracking-widest uppercase">{t.report.rank}</span>
                         <span className="text-5xl font-black font-orbitron leading-none" style={{ color: report.rank.color }}>
                             {report.rank.rank}
                         </span>
@@ -93,9 +95,9 @@ export function AuditReport({
                         </p>
                     </div>
                     <div className="mt-6 p-4 bg-amber-900/20 border border-amber-500/50 rounded-lg max-w-md mx-auto">
-                        <p className="text-sm text-amber-400 uppercase tracking-widest font-orbitron mb-1">MAJOR FINANCIAL LEAK</p>
+                        <p className="text-sm text-amber-400 uppercase tracking-widest font-orbitron mb-1">{t.report.major_leak}</p>
                         <p className="text-xl text-white font-bold">
-                            最優先改善項目: 【{topCategory}】
+                            {t.report.top_priority.replace('{category}', t.report.categories[topCategory])}
                         </p>
                     </div>
                 </div>
@@ -112,17 +114,19 @@ export function AuditReport({
             </div>
 
             {/* 推奨対策 */}
-            <h3 className="text-lg font-semibold mb-6 text-gray-300 text-center font-orbitron">損失の内訳</h3>
+            <h3 className="text-lg font-semibold mb-6 text-gray-300 text-center font-orbitron">{t.report.breakdown}</h3>
             <div className="space-y-10">
                 {Object.entries(groupedBreakdown).map(([category, items]) => (
                     <div key={category}>
-                        <h4 className="text-md font-bold text-amber-500 mb-2 pl-2 font-orbitron">{category}</h4>
+                        <h4 className="text-md font-bold text-amber-500 mb-2 pl-2 font-orbitron">{t.report.categories[category as DisplayCategory]}</h4>
                         <div className="space-y-2">
                             {items.map((itemResult, index) => (
                                 <AccordionCard
                                     key={`${itemResult.item.id}-${index}`}
                                     itemResult={itemResult}
                                     remainingYears={remainingYears}
+                                    locale={locale}
+                                    region={region}
                                 />
                             ))}
                         </div>
@@ -136,11 +140,13 @@ export function AuditReport({
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
-                        今すぐ始められる対策
+                        {t.report.immediate_action}
                     </h3>
                     <div className="space-y-4">
                         {report.recommendedPatches.map((patch, index) => {
-                            const recoverableAmount = Math.round(patch.potentialRecovery * 0.3).toLocaleString();
+                            const recoverableAmount = Math.round(patch.potentialRecovery * 0.3);
+                            // TODO: Use formatCurrency here but keep it simple for now
+                            const formattedAmount = formatCurrency(recoverableAmount, region, locale);
                             return (
                                 <div
                                     key={index}
@@ -159,7 +165,7 @@ export function AuditReport({
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                     </svg>
-                                                    ライフタイム推定回復額: ¥{recoverableAmount}
+                                                    {t.report.recovery_amount.replace('{amount}', formattedAmount)}
                                                 </div>
 
                                                 {patch.actionUrl && patch.actionLabel && (

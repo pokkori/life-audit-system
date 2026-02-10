@@ -38,6 +38,23 @@ export interface TranslationDict {
         select_from_list: string;
         input_placeholder: string;
     };
+    report: {
+        official_doc: string;
+        title: string;
+        subtitle: string;
+        rank: string;
+        major_leak: string;
+        top_priority: string;
+        breakdown: string;
+        immediate_action: string;
+        recovery_amount: string;
+        categories: {
+            '資産診断': string;
+            '健康診断': string;
+            'キャリア診断': string;
+            '時間・環境診断': string;
+        };
+    };
 }
 
 const translations: Record<Locale, TranslationDict> = {
@@ -88,6 +105,23 @@ const translations: Record<Locale, TranslationDict> = {
             manual_input: '数字を直接入力する',
             select_from_list: 'リストから選択する',
             input_placeholder: '金額を入力',
+        },
+        report: {
+            official_doc: 'OFFICIAL DIAGNOSIS DOCUMENT',
+            title: '生涯損失 診断レポート',
+            subtitle: 'あなたの生涯（あと{years}年間）の推定損失額',
+            rank: 'Rank',
+            major_leak: 'MAJOR FINANCIAL LEAK',
+            top_priority: '最優先改善項目: 【{category}】',
+            breakdown: '損失の内訳',
+            immediate_action: '今すぐ始められる対策',
+            recovery_amount: 'ライフタイム推定回復額: {amount}',
+            categories: {
+                '資産診断': '資産診断',
+                '健康診断': '健康診断',
+                'キャリア診断': 'キャリア診断',
+                '時間・環境診断': '時間・環境診断'
+            }
         }
     },
     'en-US': {
@@ -137,6 +171,23 @@ const translations: Record<Locale, TranslationDict> = {
             manual_input: 'Input number directly',
             select_from_list: 'Select from list',
             input_placeholder: 'Enter amount',
+        },
+        report: {
+            official_doc: 'OFFICIAL DIAGNOSIS DOCUMENT',
+            title: 'Lifetime Loss Diagnosis Report',
+            subtitle: 'Estimated loss for your remaining lifetime ({years} years)',
+            rank: 'RANK',
+            major_leak: 'MAJOR FINANCIAL LEAK',
+            top_priority: 'Top Priority Improvement: 【{category}】',
+            breakdown: 'Loss Breakdown',
+            immediate_action: 'Measures you can start right now',
+            recovery_amount: 'Lifetime Estimated Recovery: {amount}',
+            categories: {
+                '資産診断': 'Asset Diagnosis',
+                '健康診断': 'Health Diagnosis',
+                'キャリア診断': 'Career Diagnosis',
+                '時間・環境診断': 'Time & Environment'
+            }
         }
     },
 };
