@@ -70,7 +70,7 @@ export interface AffiliateInfo {
 // リージョン別アフィリエイトリンク
 export const REGIONAL_AFFILIATE_LINKS: Record<Region, Partial<Record<AuditCategory, AffiliateInfo>>> = {
   JP: {
-    [AuditCategory.INVESTMENT]: { title: 'ネット証券で資産運用を開始', link: 'https://www.rakuten-sec.co.jp/', icon: '📈', actionLabel: '新NISA口座を開設' },
+    [AuditCategory.INVESTMENT]: { title: 'DMM FXで資産運用を開始', link: 'https://px.a8.net/svt/ejp?a8mat=4AX74G+4ASQ2A+1WP2+6CHB7', icon: '📈', actionLabel: '無料口座開設(PR)' },
     [AuditCategory.SAVINGS]: { title: '住宅ローン借り換えで固定費を削減', link: 'https://mogecheck.jp/', icon: '🏠', actionLabel: '無料シミュレーション' },
     [AuditCategory.HEALTH]: { title: 'パーソナルジムで健康寿命を延ばす', link: 'https://www.rizap.jp/', icon: '🏃', actionLabel: '無料カウンセリング' },
     [AuditCategory.CAREER]: { title: 'ハイクラス転職で年収を最大化', link: 'https://www.bizreach.jp/', icon: '💼', actionLabel: '市場価値を診断' },
