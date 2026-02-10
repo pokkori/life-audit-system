@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     siteName: "Life Audit System",
     locale: "ja_JP",
     type: "website",
+    images: "/ogp.png",
   },
   twitter: {
     card: "summary_large_image",
