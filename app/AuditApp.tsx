@@ -124,15 +124,8 @@ export default function AuditApp({ initialLocale = 'ja-JP' }: AuditAppProps) {
       try {
         const state = JSON.parse(savedState);
         if (state.answers && state.answers.length > 0) {
-          // If loaded state has different region, we might ignore answers or warn?
-          // For simplicity, we trust the saved state but if we want to enforce prop locale...
-          // Let's prioritize saved state if it exists.
+          // Just flag that restore is available, do NOT apply it yet.
           setIsRestored(true);
-          if (state.locale) setLocale(state.locale);
-          if (state.region) setRegion(state.region);
-          if (state.region) {
-            setActiveQuestions(getQuestionsByRegion(state.region));
-          }
         }
       } catch (e) {
         console.error('Failed to parse saved state', e);
@@ -146,7 +139,7 @@ export default function AuditApp({ initialLocale = 'ja-JP' }: AuditAppProps) {
     const stateToSave = {
       step,
       age,
-      activeQuestions, // Saving active questions is risky if definition changes, but needed for restore
+      activeQuestions,
       currentQuestionIndex,
       answers,
       history,
@@ -166,7 +159,14 @@ export default function AuditApp({ initialLocale = 'ja-JP' }: AuditAppProps) {
       setCurrentQuestionIndex(state.currentQuestionIndex);
       setAnswers(state.answers);
       setHistory(state.history || []);
-      if (state.locale) setLocale(state.locale);
+
+      if (state.locale) {
+        setLocale(state.locale);
+      } else if (state.region) {
+        // Fallback for older saves without locale
+        setLocale(state.region === 'US' ? 'en-US' : 'ja-JP');
+      }
+
       if (state.region) setRegion(state.region);
     }
     setIsRestored(false);
