@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Question, SelectOption } from '@/lib/questions';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NumericInputWithSuggestions } from './NumericInputWithSuggestions';
+import { Locale } from '@/types/audit';
 
 interface QuestionCardProps {
   question: Question;
@@ -11,6 +12,7 @@ interface QuestionCardProps {
   onNextMultiSelect?: () => void;
   initialSelectedMultiValues?: (string | number)[];
   initialValue?: string | number | boolean;
+  locale?: Locale;
 }
 
 export function QuestionCard({
@@ -19,6 +21,7 @@ export function QuestionCard({
   onNextMultiSelect,
   initialSelectedMultiValues = [],
   initialValue,
+  locale = 'ja-JP',
 }: QuestionCardProps) {
   const [inputValue, setInputValue] = useState<string>(initialValue !== undefined ? initialValue.toString() : '');
   const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(initialSelectedMultiValues);
@@ -111,6 +114,7 @@ export function QuestionCard({
                   onEnter={handleNumberSubmit}
                   unit={question.meta?.unit || '円'}
                   suggestions={question.meta?.suggestions}
+                  locale={locale}
                 />
                 <button
                   onClick={handleNumberSubmit}

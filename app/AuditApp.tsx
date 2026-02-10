@@ -471,7 +471,8 @@ export default function AuditApp({ initialLocale = 'ja-JP' }: AuditAppProps) {
                       (Array.isArray(answers.find(a => a.questionId === activeQuestions[currentQuestionIndex].id)?.value)
                         ? (answers.find(a => a.questionId === activeQuestions[currentQuestionIndex].id)?.value as (string | number)[])
                         : [])
-                    } />
+                    }
+                    locale={locale} />
                 )}
               </AnimatePresence>
             </div>

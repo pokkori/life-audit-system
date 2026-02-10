@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { getTranslations } from '@/lib/i18n';
+import { Locale } from '@/types/audit';
 
 interface NumericInputWithSuggestionsProps {
     value: string;
@@ -10,6 +12,7 @@ interface NumericInputWithSuggestionsProps {
     suggestions?: number[];
     unit: string;
     placeholder?: string;
+    locale?: Locale;
 }
 
 export function NumericInputWithSuggestions({
@@ -19,8 +22,10 @@ export function NumericInputWithSuggestions({
     suggestions,
     unit,
     placeholder,
+    locale = 'ja-JP',
 }: NumericInputWithSuggestionsProps) {
     const [isManual, setIsManual] = useState(!suggestions || suggestions.length === 0);
+    const t = getTranslations(locale);
 
     return (
         <div className="space-y-4">
@@ -42,7 +47,7 @@ export function NumericInputWithSuggestions({
                                     if (e.key === 'Enter') onEnter();
                                 }}
                                 min="0"
-                                placeholder={placeholder || '金額を入力'}
+                                placeholder={placeholder || t.ui.input_placeholder}
                                 className="w-full px-6 py-4 bg-gray-800 text-white text-xl border-2 border-cyan-500/50 rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/20 transition-all font-roboto-mono pr-16 appearance-none"
                                 autoFocus
                             />
@@ -55,7 +60,7 @@ export function NumericInputWithSuggestions({
                                 onChange={(e) => onChange(e.target.value)}
                                 className="w-full px-6 py-4 bg-gray-800 text-white text-xl border-2 border-cyan-500/50 rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/20 font-bold appearance-none cursor-pointer hover:border-cyan-400 transition-colors shadow-inner pr-12"
                             >
-                                <option value="" disabled className="bg-gray-800">選択してください</option>
+                                <option value="" disabled className="bg-gray-800">{t.ui.select_placeholder}</option>
                                 {suggestions?.map((val) => (
                                     <option key={val} value={val} className="bg-gray-800">
                                         {val.toLocaleString()} {unit}
@@ -76,7 +81,7 @@ export function NumericInputWithSuggestions({
                     onClick={() => setIsManual(!isManual)}
                     className="w-full text-center text-sm text-cyan-400/70 hover:text-cyan-400 transition-colors underline py-2"
                 >
-                    {isManual ? 'リストから選択する' : '数字を直接入力する'}
+                    {isManual ? t.ui.select_from_list : t.ui.manual_input}
                 </button>
             )}
         </div>

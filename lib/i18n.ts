@@ -32,6 +32,12 @@ export interface TranslationDict {
         };
         back_to_diagnosis: string;
     };
+    ui: {
+        select_placeholder: string;
+        manual_input: string;
+        select_from_list: string;
+        input_placeholder: string;
+    };
 }
 
 const translations: Record<Locale, TranslationDict> = {
@@ -76,6 +82,12 @@ const translations: Record<Locale, TranslationDict> = {
                 ]
             },
             back_to_diagnosis: '< 診断に戻る'
+        },
+        ui: {
+            select_placeholder: '選択してください',
+            manual_input: '数字を直接入力する',
+            select_from_list: 'リストから選択する',
+            input_placeholder: '金額を入力',
         }
     },
     'en-US': {
@@ -119,6 +131,12 @@ const translations: Record<Locale, TranslationDict> = {
                 ]
             },
             back_to_diagnosis: '< BACK TO DIAGNOSIS'
+        },
+        ui: {
+            select_placeholder: 'Please select',
+            manual_input: 'Input number directly',
+            select_from_list: 'Select from list',
+            input_placeholder: 'Enter amount',
         }
     },
 };
