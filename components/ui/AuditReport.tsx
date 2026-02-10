@@ -5,8 +5,8 @@ import { AuditResultReport, DisplayCategory, Locale, Region } from '@/types/audi
 import { AccordionCard } from './AccordionCard';
 import { ShareButtons } from './ShareButtons';
 import { CreatorProfile } from './CreatorProfile';
-import { RecoverySimulator } from './RecoverySimulator';
-import { ImprovementRoadmap } from './ImprovementRoadmap';
+// import { RecoverySimulator } from './RecoverySimulator';
+// import { ImprovementRoadmap } from './ImprovementRoadmap';
 import { LIFETIME_AGE } from '@/lib/AuditEngine';
 
 export function AuditReport({
