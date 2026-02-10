@@ -203,6 +203,7 @@ const JP_QUESTIONS: Question[] = [
     },
   },
 
+
   // 健康診断
   {
     id: 'health-1',
@@ -257,6 +258,107 @@ const JP_QUESTIONS: Question[] = [
       reasoningTemplate: '睡眠不足による生産性低下20-30% × 時給{hourWage}円 × {remainingYears}年',
     },
   },
+  {
+    id: 'health-3',
+    text: '週にどのくらい運動をしていますか？',
+    category: AuditCategory.HEALTH,
+    displayCategory: '健康診断',
+    type: 'select',
+    options: [
+      { value: 'active', label: '週3回以上（ジムなど）', lossMultiplier: 0 },
+      { value: 'moderate', label: '週1-2回程度', lossMultiplier: 0.5 },
+      { value: 'light', label: '通勤・通学のみ', lossMultiplier: 1.0 },
+      { value: 'none', label: 'ほとんど運動しない', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 300000,
+    meta: {
+      rationale: '運動不足による将来の医療費増加リスクと生産性低下です。',
+      action: 'まずは1日10分の散歩やストレッチから始めましょう。',
+      reasoningTemplate: '年間医療費リスク{amount}円 × 運動不足リスク係数 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'health-4',
+    text: '健康診断の結果で「要再検査」などを放置していませんか？',
+    category: AuditCategory.HEALTH,
+    displayCategory: '健康診断',
+    type: 'select',
+    options: [
+      { value: 'ok', label: '異常なし、または受診済み', lossMultiplier: 0 },
+      { value: 'ignore_minor', label: '軽度の指摘を放置中', lossMultiplier: 1 },
+      { value: 'ignore_major', label: '要再検査・精密検査を放置中', lossMultiplier: 3 },
+    ],
+    baseAmount: 100000,
+    meta: {
+      rationale: '病気の早期発見遅れによる治療費増大と就労不能リスクです。',
+      action: '今すぐ病院を予約し、再検査を受けましょう。',
+      reasoningTemplate: '早期発見による削減可能医療費{amount}円 × 各種リスク係数',
+    },
+  },
+  {
+    id: 'health-5',
+    text: '普段の食事で栄養バランスを意識していますか？',
+    category: AuditCategory.HEALTH,
+    displayCategory: '健康診断',
+    type: 'select',
+    options: [
+      { value: 'good', label: '気を使っている', lossMultiplier: 0 },
+      { value: 'normal', label: '普通', lossMultiplier: 0.5 },
+      { value: 'bad', label: '外食・インスタント中心', lossMultiplier: 1.2 },
+    ],
+    baseAmount: 180000,
+    meta: {
+      rationale: '食生活の乱れによる生活習慣病リスクを金額換算しています。',
+      action: '週末に野菜を買いだめして、自炊の頻度を増やしましょう。',
+      reasoningTemplate: '健康リスク{amount}円 × 係数{multiplier} × {remainingYears}年',
+    },
+  },
+  {
+    id: 'health-6',
+    text: '喫煙習慣や過度な飲酒はありますか？',
+    category: AuditCategory.HEALTH,
+    displayCategory: '健康診断',
+    type: 'select',
+    options: [
+      { value: 'none', label: 'ない', lossMultiplier: 0 },
+      { value: 'drinking', label: 'お酒をよく飲む', lossMultiplier: 0.8 },
+      { value: 'smoking', label: '喫煙する', lossMultiplier: 2.0 },
+      { value: 'both', label: '両方ある', lossMultiplier: 2.5 },
+    ],
+    baseAmount: 200000, // タバコ代・酒代 + 医療費リスク
+    meta: {
+      rationale: '嗜好品への支出と将来の健康リスクの合算です。',
+      action: '禁煙外来や休肝日を設けるなど、少しずつ量を減らしましょう。',
+      reasoningTemplate: '年間支出・リスク{amount}円 × 係数{multiplier} × {remainingYears}年',
+    },
+  },
+  {
+    id: 'health-7',
+    text: 'ストレスケア（メンタルヘルス）を意識していますか？',
+    category: AuditCategory.HEALTH,
+    displayCategory: '健康診断',
+    type: 'boolean',
+    baseAmount: 150000, // カウンセリング費用や休職リスク
+    meta: {
+      rationale: 'メンタル不調による休職リスクや生産性低下を金額換算しています。',
+      action: '趣味の時間やリラックスできる時間を意識的に確保しましょう。',
+      reasoningTemplate: 'メンタルリスク換算{amount}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'health-8',
+    text: '持病や慢性的な不調（腰痛・肩こり等）を治療せず放置していますか？',
+    category: AuditCategory.HEALTH,
+    displayCategory: '健康診断',
+    type: 'boolean',
+    baseAmount: 60000, // 整体・マッサージ代の節約リスク
+    meta: {
+      rationale: '慢性痛によるパフォーマンス低下を金額換算しています。',
+      action: '定期的なメンテナンスやストレッチで身体をケアしましょう。',
+      reasoningTemplate: '年間パフォーマンス低下{amount}円 × {remainingYears}年',
+    },
+  },
+
 
   // キャリア診断
   {
@@ -298,6 +400,148 @@ const JP_QUESTIONS: Question[] = [
       reasoningTemplate: '転職による年収アップ機会 × {remainingYears}年',
     },
   },
+  {
+    id: 'career-2',
+    text: '英語や語学の学習を「いつかやろう」と先延ばしにしていませんか？',
+    category: AuditCategory.CAREER,
+    displayCategory: 'キャリア診断',
+    type: 'select',
+    options: [
+      { value: 'fluent', label: '既に習得済み／学習中', lossMultiplier: 0 },
+      { value: 'sometimes', label: 'たまに勉強する程度', lossMultiplier: 0.5 },
+      { value: 'delayed', label: 'やるやる詐欺になっている', lossMultiplier: 1 },
+      { value: 'giveup', label: '諦めている', lossMultiplier: 1.2 },
+    ],
+    baseAmount: 1000000, // 英語力の生涯年収差（仮）
+    meta: {
+      rationale: 'ビジネス英語力による生涯年収の格差です。',
+      action: '1日15分のアプリ学習やオンライン英会話から始めましょう。',
+      reasoningTemplate: '英語力による年収差 期待値{amount}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'career-3',
+    text: 'ITスキルや新しい技術（AIなど）のキャッチアップをしていますか？',
+    category: AuditCategory.CAREER,
+    displayCategory: 'キャリア診断',
+    type: 'select',
+    options: [
+      { value: 'active', label: '積極的に活用・学習している', lossMultiplier: 0 },
+      { value: 'normal', label: '仕事で必要な範囲のみ', lossMultiplier: 0.5 },
+      { value: 'passive', label: 'あまりついていけていない', lossMultiplier: 1 },
+      { value: 'ignore', label: '関心がない', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 500000,
+    meta: {
+      rationale: 'デジタルスキル格差による市場価値の低下リスクです。',
+      action: 'ChatGPTなどのAIツールを日常的に触ってみることから始めましょう。',
+      reasoningTemplate: 'スキル陳腐化リスク 年間{amount}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'career-4',
+    text: '資格取得やスキルアップの勉強を先延ばしにしていませんか？',
+    category: AuditCategory.CAREER,
+    displayCategory: 'キャリア診断',
+    type: 'boolean',
+    followUp: {
+      id: 'career-4a',
+      text: 'その資格を取得することで、年収や副業収入はどれくらい上がりそうですか？',
+      category: AuditCategory.CAREER,
+      displayCategory: 'キャリア診断',
+      type: 'select',
+      options: [
+        { value: 100000, label: '年10万円程度', lossMultiplier: 0 },
+        { value: 300000, label: '年30万円程度', lossMultiplier: 0 },
+        { value: 500000, label: '年50万円以上', lossMultiplier: 0 },
+        { value: 1000000, label: '年100万円以上', lossMultiplier: 0 },
+      ],
+      meta: {
+        unit: '円/年',
+        rationale: '資格取得による収入アップの機会損失です。',
+        action: '試験日を予約し、参考書を購入して自分を追い込みましょう。',
+        reasoningTemplate: '期待収入アップ{amount}円 × {remainingYears}年',
+      },
+    },
+    followUpCondition: 'yes',
+    baseAmount: 300000,
+    meta: {
+      rationale: '自己研鑽の欠如による機会損失です。',
+      action: 'まずは目標とする資格やスキルを明確に書き出しましょう。',
+      reasoningTemplate: 'スキルアップ機会損失{amount}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'career-5',
+    text: '職務経歴書やポートフォリオを半年以上更新していませんか？',
+    category: AuditCategory.CAREER,
+    displayCategory: 'キャリア診断',
+    type: 'boolean',
+    baseAmount: 100000, // チャンスロス
+    meta: {
+      rationale: 'ヘッドハンティングや好条件のスカウトを逃すリスクです。',
+      action: '転職意欲がなくても、半年に一度は職務経歴書をアップデートしましょう。',
+      reasoningTemplate: '機会損失リスク 年間{amount}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'career-6',
+    text: '気乗りしない飲み会や付き合いに参加していますか？',
+    category: AuditCategory.CAREER,
+    displayCategory: 'キャリア診断',
+    type: 'select',
+    options: [
+      { value: 'rarely', label: '断っている／ほとんどない', lossMultiplier: 0 },
+      { value: 'monthly', label: '月1回程度', lossMultiplier: 0.5 },
+      { value: 'biweekly', label: '隔週1回程度', lossMultiplier: 1 },
+      { value: 'weekly', label: '週1回以上', lossMultiplier: 2 },
+    ],
+    baseAmount: 50000, // 飲み代5000円×10回
+    meta: {
+      rationale: '無益な時間と交際費の浪費です。',
+      action: '「行けたら行く」ではなく、きっぱりと断る勇気を持ちましょう。',
+      reasoningTemplate: '交際費・時間コスト 年間{amount}円 × 係数{multiplier} × {remainingYears}年',
+    },
+  },
+  {
+    id: 'career-7',
+    text: '副業や複業に興味があるのに、何も始めていませんか？',
+    category: AuditCategory.CAREER,
+    displayCategory: 'キャリア診断',
+    type: 'select',
+    options: [
+      { value: 'started', label: '既に始めている', lossMultiplier: 0 },
+      { value: 'preparing', label: '準備中', lossMultiplier: 0.2 },
+      { value: 'interested', label: '興味はあるが何もしていない', lossMultiplier: 1 },
+      { value: 'no_interest', label: '興味がない（本業に集中）', lossMultiplier: 0 },
+    ],
+    baseAmount: 600000, // 月5万×12
+    meta: {
+      rationale: '収入源分散の遅れによる機会損失です。',
+      action: '自分のスキルをココナラやクラウドソーシングで出品してみましょう。',
+      reasoningTemplate: '副業期待収入 年間{amount}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'career-8',
+    text: '書籍やセミナーなど、自己投資にお金を使っていますか？',
+    category: AuditCategory.CAREER,
+    displayCategory: 'キャリア診断',
+    type: 'number',
+    baseAmount: 0, // 入力値そのものが計算対象にならないよう、metaで調整
+    meta: {
+      unit: '円/月',
+      // ここは「使っていない損失」ではなく「将来のリターン」の逆説だが、
+      // 0円だと損失（リスク）とするロジックが必要。
+      // いったん簡易的に「月5000円以下なら警告」のようなロジックにするか、
+      // あるいはAuditEngineで「amount」が少ないほど損失、という逆転ロジックが必要。
+      // 今回はシンプルに「月額投資不足分」を損失とみなす設定にする (理想月1万 - 実費 = 損失)
+      rationale: '自己成長への投資不足は、将来の収入停滞につながります。',
+      action: '毎月読む本を1冊決めて購入する習慣をつけましょう。',
+      reasoningTemplate: '知識投資不足による機会損失',
+    },
+  },
+
 
   // 時間・環境診断
   {
@@ -317,6 +561,147 @@ const JP_QUESTIONS: Question[] = [
       rationale: '探し物による時間の浪費を時給換算しています。',
       action: '物の定位置を決め、使ったら戻す習慣をつけましょう。',
       reasoningTemplate: '1日10分 × 365日 × 時給{hourWage}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'time-2',
+    text: '10年以上前の家電（冷蔵庫・エアコン等）を使い続けていますか？',
+    category: AuditCategory.TIME, // ENVIRONMENTカテゴリがないためTIMEorSAVINGSだが、設計書の構成上TIMEへ
+    displayCategory: '時間・環境診断',
+    type: 'boolean',
+    followUp: {
+      id: 'time-2a',
+      text: '該当する家電はどれですか？（複数選択可）',
+      category: AuditCategory.TIME,
+      displayCategory: '時間・環境診断',
+      type: 'select',
+      multiple: true,
+      options: [
+        { value: 'refrigerator', label: '冷蔵庫', lossMultiplier: 1 },
+        { value: 'aircon', label: 'エアコン', lossMultiplier: 0.8 },
+        { value: 'washingMachine', label: '洗濯機', lossMultiplier: 0.5 },
+        { value: 'tv', label: 'テレビ', lossMultiplier: 0.3 },
+      ],
+      baseAmount: 10000, // 平均的な電気代差額ベース
+      meta: {
+        unit: '個',
+        rationale: '古い家電の電気代の無駄（省エネ性能の差）です。',
+        action: '最新の省エネ家電に買い替えることで、電気代を劇的に節約できます。',
+        reasoningTemplate: '電気代過払い 年間{amount}円 × {remainingYears}年',
+      },
+    },
+    followUpCondition: 'yes',
+    baseAmount: 20000, // 概算
+    meta: {
+      rationale: '古い家電による電気代の損失です。',
+      action: '製造年を確認し、10年を超えていれば買い替えを検討しましょう。',
+      reasoningTemplate: '旧式家電による電気代損失 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'time-3',
+    text: '1日のスマホ利用時間（スクリーンタイム）はどのくらいですか？',
+    category: AuditCategory.TIME,
+    displayCategory: '時間・環境診断',
+    type: 'select',
+    options: [
+      { value: 'under2', label: '2時間未満', lossMultiplier: 0 },
+      { value: '2to4', label: '2-4時間', lossMultiplier: 0.5 },
+      { value: '4to6', label: '4-6時間', lossMultiplier: 1.5 },
+      { value: 'over6', label: '6時間以上', lossMultiplier: 3.0 },
+    ],
+    baseAmount: 730000, // 1日1時間x365x2000円
+    meta: {
+      rationale: '目的のないスマホ利用による時間の浪費（時給換算）です。',
+      action: 'スクリーンタイム制限機能を設定し、デジタルデトックスを行いましょう。',
+      reasoningTemplate: '浪費時間（時給換算）{amount}円 × 係数{multiplier} × {remainingYears}年',
+    },
+  },
+  {
+    id: 'time-4',
+    text: '通勤・通学時間を有効活用できていますか？',
+    category: AuditCategory.TIME,
+    displayCategory: '時間・環境診断',
+    type: 'select',
+    options: [
+      { value: 'active', label: '読書や学習をしている', lossMultiplier: 0 },
+      { value: 'rest', label: '睡眠や休息にあてている', lossMultiplier: 0.2 },
+      { value: 'smartphone', label: 'スマホゲームやSNSを見ている', lossMultiplier: 1 },
+      { value: 'nothing', label: '特に何もしていない', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 480000, // 往復2時間x240日x2000円x0.5
+    meta: {
+      rationale: '隙間時間の積み重ねによる自己投資機会の損失です。',
+      action: '耳学（オーディオブック）などを活用し、移動時間を学習時間に変えましょう。',
+      reasoningTemplate: '年間通勤時間価値{amount}円 × 係数{multiplier} × {remainingYears}年',
+    },
+  },
+  {
+    id: 'time-5',
+    text: '家事（掃除・洗濯・食器洗い）の自動化・効率化をしていますか？',
+    category: AuditCategory.TIME,
+    displayCategory: '時間・環境診断',
+    type: 'select',
+    options: [
+      { value: 'automated', label: 'ロボット掃除機・食洗機等を活用', lossMultiplier: 0 },
+      { value: 'some', label: '一部導入している', lossMultiplier: 0.5 },
+      { value: 'manual', label: 'すべて手作業', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 365000, // 1日30分x365x2000円
+    meta: {
+      rationale: '時短家電を導入しないことによる家事労働時間の損失です。',
+      action: 'ドラム式洗濯機や食洗機の導入を検討し、自分の時間を買いましょう。',
+      reasoningTemplate: '家事労働時間価値{amount}円 × 係数{multiplier} × {remainingYears}年',
+    },
+  },
+  {
+    id: 'time-6',
+    text: '部屋は整理整頓されていますか？',
+    category: AuditCategory.TIME,
+    displayCategory: '時間・環境診断',
+    type: 'select',
+    options: [
+      { value: 'clean', label: '常に片付いている', lossMultiplier: 0 },
+      { value: 'normal', label: '普通', lossMultiplier: 0.5 },
+      { value: 'messy', label: '散らかっている', lossMultiplier: 1.5 },
+      { value: 'terrible', label: '足の踏み場がない', lossMultiplier: 3.0 },
+    ],
+    baseAmount: 100000, // 探し物+精神的ストレス
+    meta: {
+      rationale: '散らかった部屋による集中力低下と探し物の時間ロスです。',
+      action: '1日1箇所ずつ整理する「断捨離」を始めましょう。',
+      reasoningTemplate: '環境要因コスト{amount}円 × 係数{multiplier} × {remainingYears}年',
+    },
+  },
+  {
+    id: 'time-7',
+    text: '定型的な作業（メール返信や支払い等）を自動化またはテンプレート化していますか？',
+    category: AuditCategory.TIME,
+    displayCategory: '時間・環境診断',
+    type: 'boolean',
+    baseAmount: 120000, // 月10時間x2000円x12の半分
+    meta: {
+      rationale: '非効率なルーチンワークによる時間の損失です。',
+      action: '頻繁に行う作業はテンプレート化や自動化ツールを導入しましょう。',
+      reasoningTemplate: '効率化余地{amount}円 × {remainingYears}年',
+    },
+  },
+  {
+    id: 'time-8',
+    text: 'その日のタスクに優先順位をつけてから取り組んでいますか？',
+    category: AuditCategory.TIME,
+    displayCategory: '時間・環境診断',
+    type: 'select',
+    options: [
+      { value: 'always', label: '必ず前日か朝に決めている', lossMultiplier: 0 },
+      { value: 'sometimes', label: 'たまに決める', lossMultiplier: 0.5 },
+      { value: 'rarely', label: '行き当たりばったりが多い', lossMultiplier: 1.5 },
+    ],
+    baseAmount: 240000, // 生産性低下による損失
+    meta: {
+      rationale: '優先順位の欠如による生産性の低下と手戻りの発生です。',
+      action: '前日の夜に「明日やるべきことTOP3」を書き出してから寝ましょう。',
+      reasoningTemplate: '生産性低下ロス{amount}円 × 係数{multiplier} × {remainingYears}年',
     },
   },
 ];
