@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { AuditResultReport, DisplayCategory, Locale, Region } from '@/types/audit';
 import { AccordionCard } from './AccordionCard';
 import { ShareButtons } from './ShareButtons';
@@ -9,6 +9,12 @@ import { CreatorProfile } from './CreatorProfile';
 // import { ImprovementRoadmap } from './ImprovementRoadmap';
 import { LIFETIME_AGE } from '@/lib/AuditEngine';
 import { getTranslations, formatCurrency } from '@/lib/i18n';
+
+async function startCheckout() {
+    const res = await fetch('/api/stripe/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+}
 
 export function AuditReport({
     report,
@@ -220,6 +226,22 @@ export function AuditReport({
                 topRiskCategory={topCategory}
                 locale={locale}
             />
+
+            {/* アップグレードCTA */}
+            <div className="mt-8 p-6 rounded-2xl border border-green-500/30 bg-green-500/5 text-center">
+                <div className="text-3xl mb-3">📊</div>
+                <h3 className="text-lg font-bold text-green-400 mb-2">損失を取り戻す改善プランを見る</h3>
+                <p className="text-gray-400 text-sm mb-4">
+                    あなたの診断結果をもとに、AIが具体的な改善シミュレーションと<br />
+                    回収ロードマップを生成します。（買い切り ¥1,980）
+                </p>
+                <button
+                    onClick={startCheckout}
+                    className="px-8 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold transition-colors"
+                >
+                    改善プランを解除する
+                </button>
+            </div>
 
             {/* クリエイタープロフィール */}
             <CreatorProfile />
