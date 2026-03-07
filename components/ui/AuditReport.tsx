@@ -233,7 +233,7 @@ export function AuditReport({
                 <h3 className="text-lg font-bold text-green-400 mb-2">損失を取り戻す改善プランを見る</h3>
                 <p className="text-gray-400 text-sm mb-4">
                     あなたの診断結果をもとに、AIが具体的な改善シミュレーションと<br />
-                    回収ロードマップを生成します。（買い切り ¥1,980）
+                    回収ロードマップを生成します。（買い切り ¥980）
                 </p>
                 <button
                     onClick={startCheckout}
