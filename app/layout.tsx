@@ -8,6 +8,7 @@ const robotoMono = Roboto_Mono({ subsets: ["latin"], variable: '--font-roboto-mo
 const orbitron = Orbitron({ subsets: ["latin"], variable: '--font-orbitron' });
 
 export const metadata: Metadata = {
+  icons: { icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💸</text></svg>" },
   title: "Life Diagnosis System | 人生の診断システム",
   description: "あなたの「先延ばし」による生涯損失額を診断します。資産、健康、キャリア、時間の4つの観点からリスクを可視化。",
   openGraph: {
