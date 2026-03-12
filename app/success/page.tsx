@@ -1,21 +1,9 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Link from "next/link";
 
 function SuccessContent() {
-  const params = useSearchParams();
-
-  useEffect(() => {
-    // PAY.JP: cookie is set directly in checkout response, no verify step needed
-    // Stripe legacy: kept for backward compatibility
-    const sessionId = params.get("session_id");
-    if (sessionId) {
-      fetch(`/api/stripe/verify?session_id=${sessionId}`);
-    }
-  }, [params]);
-
   return (
     <div className="text-center space-y-6 max-w-md mx-auto p-6">
       <div className="text-6xl">🎉</div>
