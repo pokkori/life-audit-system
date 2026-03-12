@@ -5,16 +5,11 @@ import { AuditResultReport, DisplayCategory, Locale, Region } from '@/types/audi
 import { AccordionCard } from './AccordionCard';
 import { ShareButtons } from './ShareButtons';
 import { CreatorProfile } from './CreatorProfile';
+import PayjpModal from './PayjpModal';
 // import { RecoverySimulator } from './RecoverySimulator';
 // import { ImprovementRoadmap } from './ImprovementRoadmap';
 import { LIFETIME_AGE } from '@/lib/AuditEngine';
 import { getTranslations, formatCurrency } from '@/lib/i18n';
-
-async function startCheckout() {
-    const res = await fetch('/api/stripe/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
-    const data = await res.json();
-    if (data.url) window.location.href = data.url;
-}
 
 export function AuditReport({
     report,
@@ -28,6 +23,7 @@ export function AuditReport({
     region?: Region;
 }) {
     const t = getTranslations(locale);
+    const [showPayModal, setShowPayModal] = useState(false);
 
     // NaN防止: remainingYearsの安全な計算
     const remainingYears = useMemo(() => {
@@ -236,11 +232,19 @@ export function AuditReport({
                     回収ロードマップを生成します。（買い切り ¥980）
                 </p>
                 <button
-                    onClick={startCheckout}
+                    onClick={() => setShowPayModal(true)}
                     className="px-8 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold transition-colors"
                 >
                     改善プランを解除する
                 </button>
+                {showPayModal && (
+                    <PayjpModal
+                        publicKey={process.env.NEXT_PUBLIC_PAYJP_PUBLIC_KEY!}
+                        planLabel="プレミアムレポート ¥980（買い切り）"
+                        onSuccess={() => { setShowPayModal(false); window.location.reload(); }}
+                        onClose={() => setShowPayModal(false)}
+                    />
+                )}
             </div>
 
             {/* クリエイタープロフィール */}

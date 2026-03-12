@@ -8,6 +8,8 @@ function SuccessContent() {
   const params = useSearchParams();
 
   useEffect(() => {
+    // PAY.JP: cookie is set directly in checkout response, no verify step needed
+    // Stripe legacy: kept for backward compatibility
     const sessionId = params.get("session_id");
     if (sessionId) {
       fetch(`/api/stripe/verify?session_id=${sessionId}`);
